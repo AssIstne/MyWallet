@@ -13,6 +13,8 @@ import com.assistne.mywallet.R;
  */
 public class LaunchActivity extends Activity {
 
+//    控制延迟时间
+    private final int delayTime = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class LaunchActivity extends Activity {
 //                结束LaunchActivity避免回到该Activity
                 finish();
             }
-        }, 2000);
+        }, delayTime);
     }
 
 //    重写返回键点击事件，阻止中途退出LaunchActivity

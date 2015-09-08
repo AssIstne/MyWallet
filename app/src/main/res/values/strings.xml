@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">山寨钱钱</string>
+
+    <string name="main_add_bill">记一笔</string>
+
+    <string name="main_btn_life">流水</string>
+    <string name="main_btn_cat">统计</string>
 </resources>
