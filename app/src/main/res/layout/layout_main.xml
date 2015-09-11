@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,8 +16,68 @@
             android:background="@drawable/wish_default_img"
             >
 
+            <ImageView
+                android:id="@+id/main_wish_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/wish_tag_icon"/>
 
+            <TextView
+                android:id="@+id/main_wish_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/main_wish_icon"
+                android:layout_toEndOf="@id/main_wish_icon"
+                android:layout_alignBottom="@id/main_wish_icon"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
+                android:textColor="@color/white"
+                android:text="投资 家庭"/>
+
+            <Button
+                android:id="@+id/main_btn_add_wish"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/selector_add_wish"
+                android:alpha="0.9"
+                />
+
+            <TextView
+                android:id="@+id/main_wish_dream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:text="买房，拥有自己的家"
+                />
+
+            <TextView
+                android:id="@+id/main_wish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_wish_dream"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="1437天 06:33:10"
+                />
         </RelativeLayout>
+
         <com.assistne.mywallet.customview.MainItemsLayout
             android:id="@+id/main_items_layout"
             android:layout_width="match_parent"
@@ -46,7 +105,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_centerVertical="true"
                         android:textSize="20sp"
-                        tools:text="09月开支"
+                        android:text="09月开支"
                         />
 
                     <TextView
@@ -59,7 +118,7 @@
                         android:layout_centerVertical="true"
                         android:textSize="15sp"
                         android:textColor="@color/gray"
-                        tools:text="预算余额￥-1,115.60"
+                        android:text="预算余额￥-1,115.60"
                         />
                 </RelativeLayout>
 
