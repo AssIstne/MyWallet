@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleBillPriceLayout">
+        <attr name="price_text" format="string"/>
+        <attr name="money_symbol" format="string"/>
+    </declare-styleable>
+</resources>

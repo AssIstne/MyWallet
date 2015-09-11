@@ -5,4 +5,6 @@
 
     <string name="main_btn_life">流水</string>
     <string name="main_btn_cat">统计</string>
+    
+    <string name="rmb_symbol">￥</string>
 </resources>

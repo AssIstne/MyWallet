@@ -1,76 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <include layout="@layout/layout_navigation"/>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bill_header_bg">
-
-        <Button
-            android:id="@+id/main_index"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/selector_main_index"
-            />
-
-        <Button
-            android:id="@+id/main_action"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/selector_main_action"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp" />
-
-        <Button
-            android:id="@+id/main_message"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/main_action"
-            android:layout_toStartOf="@id/main_action"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/selector_main_message"
-            />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:background="@drawable/wish_default_img"
+            >
+
 
         </RelativeLayout>
-
-        <LinearLayout
+        <com.assistne.mywallet.customview.MainItemsLayout
+            android:id="@+id/main_items_layout"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="0dp"
-            android:layout_weight="3">
-
+            android:layout_height="match_parent"
+            android:paddingTop="148dp"
+            android:orientation="vertical">
             <RelativeLayout
+                android:id="@+id/main_title"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/home_title_bg"
+                android:layout_height="54dp"
                 android:paddingTop="10dp"
-                >
+                android:background="@drawable/home_title_bg">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -104,6 +64,7 @@
                 </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/main_title_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -112,53 +73,69 @@
 
             </RelativeLayout>
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-            </ListView>
-
             <LinearLayout
+                android:id="@+id/main_items_field"
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
-                <Button
-                    android:layout_width="0dp"
+                <ListView
+                    android:id="@+id/main_bill_list"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/select_btn_gray"
-                    android:text="@string/main_btn_life"
-                    android:textColor="@color/white"
-                    />
+                    >
+                </ListView>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/select_btn_gray"
-                    android:text="@string/main_btn_cat"
-                    android:textColor="@color/white"
-                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bill_bg">
+
+                    <Button
+                        android:id="@+id/main_bill_btn_life"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/select_btn_gray"
+                        android:text="@string/main_btn_life"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        />
+
+                    <Button
+                        android:id="@+id/main_bill_btn_cat"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/select_btn_gray"
+                        android:text="@string/main_btn_cat"
+                        android:textSize="17sp"
+                        android:textColor="@color/white"
+                        />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        </com.assistne.mywallet.customview.MainItemsLayout>
+
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/main_add_bill_bg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/selector_add_bill_bg">
+        android:background="@drawable/selector_add_bill_bg"
+        >
 
         <ImageView
             android:id="@+id/main_add_bill_btn"

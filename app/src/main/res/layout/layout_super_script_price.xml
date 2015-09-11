@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+        <TextView
+            android:id="@+id/pre_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rmb_symbol"
+            android:textSize="20sp"
+            android:textColor="@color/red"
+            tools:text="￥20."
+            />
+        <TextView
+            android:id="@+id/post_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pre_price"
+            android:layout_toEndOf="@id/pre_price"
+            android:layout_alignTop="@id/pre_price"
+            android:textSize="14sp"
+            android:textColor="@color/red"
+            tools:text="40"
+            />
+</RelativeLayout>
