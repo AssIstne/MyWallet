@@ -7,4 +7,8 @@
     <string name="main_btn_cat">统计</string>
     
     <string name="rmb_symbol">￥</string>
+
+    <string name="add_bill_key_in">收入</string>
+    <string name="add_bill_key_out">支出</string>
+
 </resources>

@@ -1,13 +1,11 @@
 package com.assistne.mywallet.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -77,11 +75,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_add_bill_bg:
-                Log.d("test", "click add bill button");
-                ImageView imageView = (ImageView)findViewById(R.id.main_add_bill_btn);
-                RelativeLayout mainAddBill = (RelativeLayout)findViewById(R.id.main_add_bill_bg);
-                Log.d("test", "background" + mainAddBill.getDrawableState().toString());
-                Log.d("test", "button" + imageView.getDrawableState().toString());
+                Intent intent = new Intent(this, AddBillActivity.class);
+                startActivity(intent);
                 break;
         }
     }

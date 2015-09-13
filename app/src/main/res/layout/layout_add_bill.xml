@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bill_header_bg">
+
+        <Button
+            android:id="@+id/add_bill_back_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_add_bill_back_btn"
+            />
+
+        <Button
+            android:id="@+id/add_bill_title_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/add_bill_key_out"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/key_bill_type_sel"
+            android:drawableEnd="@drawable/key_bill_type_sel"
+            android:background="@android:color/transparent"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bill_category_item_bg"
+        >
+
+        <TextView
+            android:id="@+id/add_bill_category_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="30sp"
+            android:textColor="@color/gray_for_text"
+            android:text="餐饮"/>
+
+        <TextView
+            android:id="@+id/add_bill_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignBaseline="@id/add_bill_category_text"
+            android:textSize="30sp"
+            android:textColor="@color/gray_for_text"
+            android:text="00.00"
+            />
+
+        <ImageView
+            android:id="@+id/add_bill_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/bill_category_arrow"
+            android:layout_below="@id/add_bill_category_text"
+            />
+        <GridView
+            android:id="@+id/add_bill_category_bg"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@id/add_bill_arrow"
+            android:background="@drawable/bill_category_bg">
+
+        </GridView>
+
+        <Button
+            android:id="@+id/add_bill_emotion_normal"
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="@dimen/emotion_size"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/add_bill_category_bg"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_emotion_normal1"/>
+        <TextView
+            android:id="@+id/add_bill_emotion_normal_text"
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_bill_emotion_normal"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="一般"
+            />
+
+        <Button
+            android:id="@+id/add_bill_emotion_good"
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="@dimen/emotion_size"
+            android:layout_alignBaseline="@id/add_bill_emotion_normal"
+            android:layout_toLeftOf="@id/add_bill_emotion_normal"
+            android:layout_toStartOf="@id/add_bill_emotion_normal"
+            android:layout_marginRight="60dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/selector_emotion_good1"/>
+        <TextView
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/add_bill_emotion_normal_text"
+            android:layout_toLeftOf="@id/add_bill_emotion_normal_text"
+            android:layout_marginRight="60dp"
+            android:layout_marginEnd="60dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="满意"
+            />
+
+        <Button
+            android:id="@+id/add_bill_emotion_bad"
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="@dimen/emotion_size"
+            android:layout_alignBaseline="@id/add_bill_emotion_normal"
+            android:layout_toRightOf="@id/add_bill_emotion_normal"
+            android:layout_toEndOf="@id/add_bill_emotion_normal"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:background="@drawable/selector_emotion_bad1"/>
+        <TextView
+            android:layout_width="@dimen/emotion_size"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/add_bill_emotion_normal_text"
+            android:layout_toRightOf="@id/add_bill_emotion_normal_text"
+            android:layout_toEndOf="@id/add_bill_emotion_normal_text"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="不爽"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
