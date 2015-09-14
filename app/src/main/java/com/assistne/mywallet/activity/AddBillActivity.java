@@ -32,6 +32,8 @@ public class AddBillActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.add_bill_emotion_normal).setOnClickListener(this);
         findViewById(R.id.add_bill_emotion_good).setOnClickListener(this);
         findViewById(R.id.add_bill_emotion_bad).setOnClickListener(this);
+        findViewById(R.id.add_bill_share).setOnClickListener(this);
+        findViewById(R.id.add_bill_ensure).setOnClickListener(this);
     }
 
     @Override

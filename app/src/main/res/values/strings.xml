@@ -11,4 +11,8 @@
     <string name="add_bill_key_in">收入</string>
     <string name="add_bill_key_out">支出</string>
 
+    <string name="add_bill_share">保存并分享</string>
+    <string name="add_bill_ensure">保存</string>
+
+    <string name="btn_ensure">确定</string>
 </resources>
