@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_navigation"/>
+    <include layout="@layout/snippet_home_navigation_layout"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,7 +17,7 @@
             >
 
             <ImageView
-                android:id="@+id/main_wish_icon"
+                android:id="@+id/home_ic_wish_des"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentTop="true"
@@ -29,19 +29,19 @@
                 android:background="@drawable/wish_tag_icon"/>
 
             <TextView
-                android:id="@+id/main_wish_des"
+                android:id="@+id/home_text_wish_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/main_wish_icon"
-                android:layout_toEndOf="@id/main_wish_icon"
-                android:layout_alignBottom="@id/main_wish_icon"
+                android:layout_toRightOf="@id/home_ic_wish_des"
+                android:layout_toEndOf="@id/home_ic_wish_des"
+                android:layout_alignBottom="@id/home_ic_wish_des"
                 android:layout_marginLeft="7dp"
                 android:layout_marginStart="7dp"
                 android:textColor="@color/white"
                 android:text="投资 家庭"/>
 
             <Button
-                android:id="@+id/main_btn_add_wish"
+                android:id="@+id/home_btn_add_wish"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentTop="true"
@@ -66,7 +66,7 @@
                 />
 
             <TextView
-                android:id="@+id/main_wish_time"
+                android:id="@+id/home_text_wish_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main_wish_dream"
@@ -79,13 +79,13 @@
         </RelativeLayout>
 
         <com.assistne.mywallet.customview.MainItemsLayout
-            android:id="@+id/main_items_layout"
+            android:id="@+id/home_span_bill"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="148dp"
             android:orientation="vertical">
             <RelativeLayout
-                android:id="@+id/main_title"
+                android:id="@+id/home_span_bill_title"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:paddingTop="10dp"
@@ -96,7 +96,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/main_text_month"
+                        android:id="@+id/home_text_bill_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -123,7 +123,7 @@
                 </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/main_title_arrow"
+                    android:id="@+id/home_ic_bill_title_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -133,14 +133,14 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/main_items_field"
+                android:id="@+id/home_span_bill_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
                 <ListView
-                    android:id="@+id/main_bill_list"
+                    android:id="@+id/home_list_bill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -153,7 +153,7 @@
                     android:background="@drawable/bill_bg">
 
                     <Button
-                        android:id="@+id/main_bill_btn_life"
+                        android:id="@+id/home_btn_life"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -163,13 +163,13 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/select_btn_gray"
-                        android:text="@string/main_btn_life"
+                        android:text="@string/bill_life"
                         android:textColor="@color/white"
                         android:textSize="17sp"
                         />
 
                     <Button
-                        android:id="@+id/main_bill_btn_cat"
+                        android:id="@+id/home_btn_review"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -179,7 +179,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/select_btn_gray"
-                        android:text="@string/main_btn_cat"
+                        android:text="@string/bill_review"
                         android:textSize="17sp"
                         android:textColor="@color/white"
                         />
@@ -190,14 +190,14 @@
     </FrameLayout>
 
     <RelativeLayout
-        android:id="@+id/main_add_bill_bg"
+        android:id="@+id/home_btn_add_bill"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/selector_add_bill_bg"
         >
 
         <ImageView
-            android:id="@+id/main_add_bill_btn"
+            android:id="@+id/home_ic_add_bill"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerHorizontal="true"
@@ -209,8 +209,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/main_add_bill_btn"
-            android:text="@string/main_add_bill"
+            android:layout_below="@id/home_ic_add_bill"
+            android:text="@string/bill_add"
             android:textColor="@color/selector_add_bill_text"/>
     </RelativeLayout>
 </LinearLayout>

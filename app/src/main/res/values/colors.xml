@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="red">#FFEA4F47</color>
+    <color name="green">#FF00CC63</color>
 
     <color name="gray_for_text">#FF686868</color>
 
@@ -11,4 +12,7 @@
     <color name="add_bill_btn_bg">#d3323232</color>
 
     <color name="add_bill_bg">#FFf2f2f2</color>
+
+    <color name="half_transparent_gray">#8c323232</color>
+
 </resources>

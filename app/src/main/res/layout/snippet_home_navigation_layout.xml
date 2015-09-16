@@ -6,7 +6,7 @@
     >
 
     <Button
-        android:id="@+id/main_index"
+        android:id="@+id/home_navigation_btn_index"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
@@ -18,7 +18,7 @@
         />
 
     <Button
-        android:id="@+id/main_action"
+        android:id="@+id/home_navigation_btn_action"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginRight="15dp"
@@ -29,12 +29,12 @@
         android:layout_marginEnd="15dp" />
 
     <Button
-        android:id="@+id/main_message"
+        android:id="@+id/home_navigation_btn_message"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/main_action"
-        android:layout_toStartOf="@id/main_action"
+        android:layout_toLeftOf="@id/home_navigation_btn_action"
+        android:layout_toStartOf="@id/home_navigation_btn_action"
         android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/selector_main_message"

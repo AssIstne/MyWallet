@@ -19,13 +19,13 @@ public class LaunchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_launch);
+        setContentView(R.layout.activity_launch_layout);
 
 //        等待一段时间后启动MainActivity
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+                Intent intent = new Intent(LaunchActivity.this, HomeActivity.class);
                 startActivity(intent);
 //                结束LaunchActivity避免回到该Activity
                 finish();

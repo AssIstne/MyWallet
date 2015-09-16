@@ -49,11 +49,11 @@ public class BillsAdapter extends BaseAdapter {
 
             holder=new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.layout_simple_bill, null);
-            holder.emotion = (ImageView)convertView.findViewById(R.id.simple_bill_emotion);
-            holder.category = (TextView)convertView.findViewById(R.id.simple_bill_cat);
-            holder.time_location = (TextView)convertView.findViewById(R.id.simple_bill_time_and_location);
-            holder.price = (SimpleBillPriceLayout)convertView.findViewById(R.id.simple_bill_price);
+            convertView = mInflater.inflate(R.layout.list_item_bill_simple, null);
+            holder.emotion = (ImageView)convertView.findViewById(R.id.bill_simple_img_emotion);
+            holder.category = (TextView)convertView.findViewById(R.id.bill_simple_text_category);
+            holder.time_location = (TextView)convertView.findViewById(R.id.bill_simple_text_info);
+            holder.price = (SimpleBillPriceLayout)convertView.findViewById(R.id.bill_simple_span_price);
             convertView.setTag(holder);
 
         }else {

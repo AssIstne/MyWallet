@@ -33,9 +33,9 @@ public class SimpleBillPriceLayout extends RelativeLayout {
         array.recycle();
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.layout_super_script_price, this);
-        mPrePrice = (TextView)findViewById(R.id.pre_price);
-        mPostPrice = (TextView)findViewById(R.id.post_price);
+        inflater.inflate(R.layout.snippet_price_script_layout, this);
+        mPrePrice = (TextView)findViewById(R.id.price_script_text_prefix);
+        mPostPrice = (TextView)findViewById(R.id.price_script_text_suffix);
 
         setPriceText(fPrice);
 

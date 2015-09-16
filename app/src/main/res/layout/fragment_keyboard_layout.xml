@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboard_span_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/half_transparent_gray"
+    android:clickable="true"
+    >
+
+    <LinearLayout
+        android:id="@+id/keyboard_span_main"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@drawable/list_item_bg"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <Button
+                android:id="@+id/keyboard_btn_title_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/bill_spend"
+                android:textColor="@color/red"
+                android:textSize="20sp"
+                android:drawableRight="@drawable/key_bill_type_sel"
+                android:drawableEnd="@drawable/key_bill_type_sel"
+                android:background="@android:color/transparent"
+                />
+
+            <TextView
+                android:id="@+id/keyboard_text_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_alignBaseline="@id/add_bill_category_text"
+                android:textSize="20sp"
+                android:textColor="@color/red"
+                android:text="00.00"
+                />
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/hline"/>
+        <GridView
+            android:id="@+id/keyboard_grid_numbers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            >
+
+        </GridView>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/hline"/>
+        <Button
+            android:id="@+id/keyboard_btn_ensure"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/selector_keyboard"
+            android:text="@string/global_ensure"
+            />
+    </LinearLayout>
+</RelativeLayout>

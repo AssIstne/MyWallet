@@ -6,21 +6,21 @@
     >
 
         <TextView
-            android:id="@+id/pre_price"
+            android:id="@+id/price_script_text_prefix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rmb_symbol"
+            android:text="@string/bill_rmb_symbol"
             android:textSize="20sp"
             android:textColor="@color/red"
             tools:text="￥20."
             />
         <TextView
-            android:id="@+id/post_price"
+            android:id="@+id/price_script_text_suffix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/pre_price"
-            android:layout_toEndOf="@id/pre_price"
-            android:layout_alignTop="@id/pre_price"
+            android:layout_toRightOf="@id/price_script_text_prefix"
+            android:layout_toEndOf="@id/price_script_text_prefix"
+            android:layout_alignTop="@id/price_script_text_prefix"
             android:textSize="14sp"
             android:textColor="@color/red"
             tools:text="40"

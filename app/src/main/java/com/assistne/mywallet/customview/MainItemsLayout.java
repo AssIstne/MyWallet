@@ -49,9 +49,9 @@ public class MainItemsLayout extends LinearLayout {
     protected void onFinishInflate() {
         Log.d("test", "on finishiinflate");
 		super.onFinishInflate();
-        mTitle = findViewById(R.id.main_title);
-        mItemsField = findViewById(R.id.main_items_field);
-        mTitleArrow = (ImageView)findViewById(R.id.main_title_arrow);
+        mTitle = findViewById(R.id.home_span_bill_title);
+        mItemsField = findViewById(R.id.home_span_bill_content);
+        mTitleArrow = (ImageView)findViewById(R.id.home_ic_bill_title_arrow);
         mTop = getPaddingTop() + mItemsField.getHeight();
         Log.d("test", "finish --"+mTop+"    "+mItemsField.getHeight()+"    "+mItemsField.getMeasuredHeight());
     }

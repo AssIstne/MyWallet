@@ -19,22 +19,21 @@ import java.util.Date;
 /**
  * Created by assistne on 15/9/7.
  */
-public class MainActivity extends Activity implements View.OnClickListener{
+public class HomeActivity extends Activity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_main);
-
-        Button mainIndex = (Button)findViewById(R.id.main_index);
+        setContentView(R.layout.activity_home_layout);
+        Button mainIndex = (Button)findViewById(R.id.home_navigation_btn_index);
         mainIndex.setActivated(true);
         mainIndex.setOnClickListener(this);
 
-        RelativeLayout mainAddBill = (RelativeLayout)findViewById(R.id.main_add_bill_bg);
+        RelativeLayout mainAddBill = (RelativeLayout)findViewById(R.id.home_btn_add_bill);
         mainAddBill.setOnClickListener(this);
 
-        ListView listView = (ListView)findViewById(R.id.main_bill_list);
+        ListView listView = (ListView)findViewById(R.id.home_list_bill);
 
         ArrayList<Bill> list = new ArrayList<>();
         Bill bill1 = new Bill();
@@ -74,8 +73,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_add_bill_bg:
-                Intent intent = new Intent(this, AddBillActivity.class);
+            case R.id.home_btn_add_bill:
+                Intent intent = new Intent(this, BillActivity.class);
                 startActivity(intent);
                 break;
         }

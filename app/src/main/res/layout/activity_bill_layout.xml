@@ -1,42 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <RelativeLayout
+    <fragment
+        android:id="@+id/bill_fragment_navigation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bill_header_bg">
-
-        <Button
-            android:id="@+id/add_bill_back_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/selector_add_bill_back_btn"
-            />
-
-        <Button
-            android:id="@+id/add_bill_title_key"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/add_bill_key_out"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:drawableRight="@drawable/key_bill_type_sel"
-            android:drawableEnd="@drawable/key_bill_type_sel"
-            android:background="@android:color/transparent"
-            />
-    </RelativeLayout>
-
+        android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
+        tools:layout="@layout/fragment_global_navigation_layout" />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -64,7 +43,7 @@
                     android:textColor="@color/gray_for_text"
                     android:text="餐饮"/>
 
-                <TextView
+                <Button
                     android:id="@+id/add_bill_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,6 +55,7 @@
                     android:layout_alignBaseline="@id/add_bill_category_text"
                     android:textSize="30sp"
                     android:textColor="@color/gray_for_text"
+                    android:background="@android:color/transparent"
                     android:text="00.00"
                     />
 
@@ -221,7 +201,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/white"
-                        android:text="@string/add_bill_share"/>
+                        android:text="@string/bill_save_and_share"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -246,11 +226,18 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/white"
-                        android:text="@string/add_bill_ensure"/>
+                        android:text="@string/bill_save"/>
                 </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/add_bill_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
     </FrameLayout>
 
 </LinearLayout>
