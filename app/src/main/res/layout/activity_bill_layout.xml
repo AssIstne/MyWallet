@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/bill_span_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -10,11 +10,13 @@
         android:id="@+id/bill_fragment_navigation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
         tools:layout="@layout/fragment_global_navigation_layout" />
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/bill_fragment_navigation">
 
 
         <ScrollView
@@ -29,7 +31,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/add_bill_category_text"
+                    android:id="@+id/bill_text_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -44,7 +46,7 @@
                     android:text="餐饮"/>
 
                 <Button
-                    android:id="@+id/add_bill_price"
+                    android:id="@+id/bill_btn_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -52,42 +54,63 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_alignBaseline="@id/add_bill_category_text"
+                    android:layout_alignBaseline="@id/bill_text_category"
                     android:textSize="30sp"
-                    android:textColor="@color/gray_for_text"
+                    android:textColor="@color/red"
                     android:background="@android:color/transparent"
-                    android:text="00.00"
+                    android:text="0.00"
                     />
 
                 <ImageView
-                    android:id="@+id/add_bill_arrow"
+                    android:id="@+id/bill_img_category_arrow"
                     android:layout_width="match_parent"
                     android:layout_height="9dp"
                     android:background="@drawable/bill_category_arrow"
-                    android:layout_below="@id/add_bill_category_text"
+                    android:layout_below="@id/bill_text_category"
                     />
-                <GridView
-                    android:id="@+id/add_bill_category_bg"
+                <LinearLayout
+                    android:id="@+id/bill_span_category"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_below="@id/add_bill_arrow"
-                    android:background="@drawable/bill_category_bg">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bill_category_bg"
+                    android:layout_below="@id/bill_img_category_arrow"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    >
 
-                </GridView>
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/bill_pager_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="145dp"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/bill_span_pointers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        tools:layout_height = "20dp"
+                        />
+                </LinearLayout>
+
+
 
                 <Button
-                    android:id="@+id/add_bill_emotion_normal"
+                    android:id="@+id/bill_btn_emotion_normal"
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="@dimen/emotion_size"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/add_bill_category_bg"
+                    android:layout_below="@id/bill_span_category"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/selector_emotion_normal1"/>
                 <TextView
-                    android:id="@+id/add_bill_emotion_normal_text"
+                    android:id="@+id/bill_text_emotion_normal"
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/add_bill_emotion_normal"
+                    android:layout_below="@id/bill_btn_emotion_normal"
                     android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
@@ -96,20 +119,20 @@
                     />
 
                 <Button
-                    android:id="@+id/add_bill_emotion_good"
+                    android:id="@+id/bill_btn_emotion_good"
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="@dimen/emotion_size"
-                    android:layout_alignBaseline="@id/add_bill_emotion_normal"
-                    android:layout_toLeftOf="@id/add_bill_emotion_normal"
-                    android:layout_toStartOf="@id/add_bill_emotion_normal"
+                    android:layout_alignBaseline="@id/bill_btn_emotion_normal"
+                    android:layout_toLeftOf="@id/bill_btn_emotion_normal"
+                    android:layout_toStartOf="@id/bill_btn_emotion_normal"
                     android:layout_marginRight="60dp"
                     android:layout_marginEnd="60dp"
                     android:background="@drawable/selector_emotion_good1"/>
                 <TextView
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/add_bill_emotion_normal_text"
-                    android:layout_toLeftOf="@id/add_bill_emotion_normal_text"
+                    android:layout_alignBaseline="@id/bill_text_emotion_normal"
+                    android:layout_toLeftOf="@id/bill_text_emotion_normal"
                     android:layout_marginRight="60dp"
                     android:layout_marginEnd="60dp"
                     android:gravity="center"
@@ -118,21 +141,21 @@
                     />
 
                 <Button
-                    android:id="@+id/add_bill_emotion_bad"
+                    android:id="@+id/bill_btn_emotion_bad"
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="@dimen/emotion_size"
-                    android:layout_alignBaseline="@id/add_bill_emotion_normal"
-                    android:layout_toRightOf="@id/add_bill_emotion_normal"
-                    android:layout_toEndOf="@id/add_bill_emotion_normal"
+                    android:layout_alignBaseline="@id/bill_btn_emotion_normal"
+                    android:layout_toRightOf="@id/bill_btn_emotion_normal"
+                    android:layout_toEndOf="@id/bill_btn_emotion_normal"
                     android:layout_marginLeft="60dp"
                     android:layout_marginStart="60dp"
                     android:background="@drawable/selector_emotion_bad1"/>
                 <TextView
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/add_bill_emotion_normal_text"
-                    android:layout_toRightOf="@id/add_bill_emotion_normal_text"
-                    android:layout_toEndOf="@id/add_bill_emotion_normal_text"
+                    android:layout_alignBaseline="@id/bill_text_emotion_normal"
+                    android:layout_toRightOf="@id/bill_text_emotion_normal"
+                    android:layout_toEndOf="@id/bill_text_emotion_normal"
                     android:layout_marginLeft="60dp"
                     android:layout_marginStart="60dp"
                     android:gravity="center"
@@ -141,11 +164,11 @@
                     />
 
                 <Button
-                    android:id="@+id/add_bill_camera"
+                    android:id="@+id/bill_btn_camera"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:background="@drawable/selector_bill_camera"
-                    android:layout_below="@id/add_bill_emotion_normal_text"
+                    android:layout_below="@id/bill_text_emotion_normal"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="20dp"
@@ -153,11 +176,12 @@
                     android:layout_marginStart="10dp"/>
 
                 <EditText
+                    android:id="@+id/bill_edit_description"
                     android:layout_width="230dp"
                     android:layout_height="120dp"
-                    android:layout_below="@id/add_bill_emotion_normal_text"
-                    android:layout_toRightOf="@id/add_bill_camera"
-                    android:layout_toEndOf="@id/add_bill_camera"
+                    android:layout_below="@id/bill_text_emotion_normal"
+                    android:layout_toRightOf="@id/bill_btn_camera"
+                    android:layout_toEndOf="@id/bill_btn_camera"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
@@ -180,7 +204,7 @@
                 >
 
                 <RelativeLayout
-                    android:id="@+id/add_bill_share"
+                    android:id="@+id/bill_span_share"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -205,7 +229,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/add_bill_ensure"
+                    android:id="@+id/bill_span_ensure"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -231,13 +255,6 @@
 
             </LinearLayout>
         </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/add_bill_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
     </FrameLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -47,7 +47,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_alignBaseline="@id/add_bill_category_text"
+                android:layout_alignBaseline="@id/bill_text_category"
                 android:textSize="20sp"
                 android:textColor="@color/red"
                 android:text="00.00"
@@ -60,8 +60,7 @@
         <GridView
             android:id="@+id/keyboard_grid_numbers"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="210dp"
             android:numColumns="3"
             android:stretchMode="columnWidth"
             android:gravity="center"

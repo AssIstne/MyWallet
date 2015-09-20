@@ -42,7 +42,12 @@ public class KeyBoardAdapter extends BaseAdapter {
         View view;
         if (convertView == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.list_item_keyboard_button, null);
-            ((TextView)view.findViewById(R.id.keyboard_button_text_number)).setText(NUMBERS[position]);
+            if (position == 11) {
+                view.findViewById(R.id.keyboard_button_text_number).setVisibility(View.GONE);
+                view.findViewById(R.id.keyboard_img_delete).setVisibility(View.VISIBLE);
+            } else {
+                ((TextView)view.findViewById(R.id.keyboard_button_text_number)).setText(NUMBERS[position]);
+            }
         } else {
             view = convertView;
         }
