@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.adapter.BillCategoryFragmentAdapter;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.fragment.GlobalNavigationFragment;
 import com.assistne.mywallet.fragment.KeyBoardFragment;
 import com.assistne.mywallet.model.BillCategory;
@@ -67,16 +68,11 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     private void initCategorySpan() {
         final ViewPager viewPager = (ViewPager)findViewById(R.id.bill_pager_category);
-        ArrayList<BillCategory> data = new ArrayList<>();
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
-        data.add(new BillCategory("餐饮", R.drawable.selector_round_btn_green));
+        ArrayList<BillCategory> data = MyWalletDatabaseUtils.getInstance(this)
+                .getActivatedBillCategory(isIncome ? BillCategory.ALL_INCOME : BillCategory.ALL_SPENT);
+
         BillCategoryFragmentAdapter adapter = new BillCategoryFragmentAdapter(getSupportFragmentManager(), data);
         viewPager.setAdapter(adapter);
-
         Log.d(LOG_TAG, "count of viewpager " + adapter.getCount());
         final LinearLayout pointers = (LinearLayout)findViewById(R.id.bill_span_pointers);
         if (adapter.getCount() > 1) {
@@ -148,7 +144,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
         btnPrice.setTextColor(isIncome ?
             getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
-
+        initCategorySpan();
     }
 
     public void showKeyboard() {
@@ -158,7 +154,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             keyBoardFragment.setCallBack(keyboardCallBack);
             Bundle bundle = new Bundle();
             bundle.putBoolean(KeyBoardFragment.IS_INCOME, isIncome);
-            bundle.putString(keyBoardFragment.PRICE, btnPrice.getText().toString());
+            bundle.putString(KeyBoardFragment.PRICE, btnPrice.getText().toString());
             keyBoardFragment.setArguments(bundle);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.add(R.id.bill_span_root, keyBoardFragment);

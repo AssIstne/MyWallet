@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.Window;
 
 import com.assistne.mywallet.R;
+import com.assistne.mywallet.db.MyWalletDatabaseHelper;
+import com.assistne.mywallet.util.Constants;
 
 /**
  * Created by assistne on 15/9/7.
@@ -20,7 +22,7 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_launch_layout);
-
+        new MyWalletDatabaseHelper(this, Constants.DATABASE, null, 1).getWritableDatabase();
 //        等待一段时间后启动MainActivity
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
