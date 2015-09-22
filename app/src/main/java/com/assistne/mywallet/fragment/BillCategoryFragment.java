@@ -27,15 +27,20 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
 
     public static final String LOG_TAG = "test category fragment";
     public static final String DATA = "data";
+    public static final String POSITION = "position";
+
+    private int position;
 
     private View activatedBillCategory;
     private GridView gridView;
     private BillActivity activity;
+    private ArrayList<BillCategory> data;
 
-    public static BillCategoryFragment newInstance(ArrayList<BillCategory> data) {
+    public static BillCategoryFragment newInstance(ArrayList<BillCategory> data, int position) {
         BillCategoryFragment fragment = new BillCategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(DATA, data);
+        bundle.putInt(POSITION, position);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -43,11 +48,11 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(LOG_TAG, "on create view ");
         activity = (BillActivity)getActivity();
         View root = inflater.inflate(R.layout.fragment_bill_category_layout, container, false);
         Bundle bundle = getArguments();
-        ArrayList<BillCategory> data = bundle.getParcelableArrayList(DATA);
+        data = bundle.getParcelableArrayList(DATA);
+        position = bundle.getInt(POSITION);
         gridView = (GridView)root.findViewById(R.id.bill_category_grid_main);
         gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         gridView.setAdapter(new GridViewAdapter(getActivity(), data));
@@ -107,5 +112,23 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
             }
             return view;
         }
+
+        public void setData(ArrayList<BillCategory> data) {
+            this.data = data;
+        }
+    }
+
+    public void update(ArrayList<BillCategory> newData){
+        Log.d(LOG_TAG, "update");
+        data.clear();
+        data.addAll(newData);
+        for (BillCategory billCategory : data) {
+            Log.d(LOG_TAG, billCategory.getName());
+        }
+        ((GridViewAdapter)gridView.getAdapter()).notifyDataSetChanged();
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

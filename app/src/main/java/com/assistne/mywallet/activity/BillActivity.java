@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.adapter.BillCategoryFragmentAdapter;
@@ -25,16 +26,18 @@ import java.util.ArrayList;
  */
 public class BillActivity extends FragmentActivity implements View.OnClickListener {
 
-    private Button btnTitleKey;
-    private Button btnPrice;
-    private View mActivatedEmotion;
+    private String LOG_TAG = "test act bill";
+
     private boolean isIncome = false;
     private boolean isShowingKeyboard = false;
 
-    private String LOG_TAG = "test act bill";
-
+    private Button btnTitleKey;
+    private Button btnPrice;
+    private View activatedEmotion;
     private ImageView activatedPointer;
     private View activatedBillCategory;
+    private ViewPager viewPager;
+    private TextView tvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +46,21 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_bill_layout);
         initNavigation();
 
-        mActivatedEmotion = findViewById(R.id.bill_btn_emotion_normal);
-        mActivatedEmotion.setOnClickListener(this);
-        mActivatedEmotion.setActivated(true);
+        activatedEmotion = findViewById(R.id.bill_btn_emotion_normal);
+        activatedEmotion.setOnClickListener(this);
+        activatedEmotion.setActivated(true);
 
         findViewById(R.id.bill_btn_emotion_normal).setOnClickListener(this);
         findViewById(R.id.bill_btn_emotion_good).setOnClickListener(this);
         findViewById(R.id.bill_btn_emotion_bad).setOnClickListener(this);
         findViewById(R.id.bill_span_share).setOnClickListener(this);
         findViewById(R.id.bill_span_ensure).setOnClickListener(this);
+        tvCategory = (TextView)findViewById(R.id.bill_text_category);
         btnPrice = (Button)findViewById(R.id.bill_btn_price);
         btnPrice.setOnClickListener(this);
-
+        viewPager = (ViewPager)findViewById(R.id.bill_pager_category);
+        BillCategoryFragmentAdapter adapter = new BillCategoryFragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
         initCategorySpan();
     }
 
@@ -67,18 +73,21 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initCategorySpan() {
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.bill_pager_category);
         ArrayList<BillCategory> data = MyWalletDatabaseUtils.getInstance(this)
                 .getActivatedBillCategory(isIncome ? BillCategory.ALL_INCOME : BillCategory.ALL_SPENT);
-
-        BillCategoryFragmentAdapter adapter = new BillCategoryFragmentAdapter(getSupportFragmentManager(), data);
-        viewPager.setAdapter(adapter);
+        for (BillCategory billCategory : data) {
+            Log.d(LOG_TAG, billCategory.getName());
+        }
+        BillCategoryFragmentAdapter adapter = (BillCategoryFragmentAdapter)viewPager.getAdapter();
+        adapter.setCategoryList(data);
+        adapter.notifyDataSetChanged();
         Log.d(LOG_TAG, "count of viewpager " + adapter.getCount());
         final LinearLayout pointers = (LinearLayout)findViewById(R.id.bill_span_pointers);
         if (adapter.getCount() > 1) {
+            Log.d(LOG_TAG, "add pointer");
+            pointers.removeAllViews();
             pointers.setVisibility(View.VISIBLE);
             for (int i = 0; i < adapter.getCount(); i++) {
-                Log.d(LOG_TAG, "add pointer");
                 ImageView pointer = new ImageView(this);
                 pointer.setImageResource(R.drawable.selecter_bill_page_pointer);
                 pointer.setTag(i);
@@ -99,7 +108,6 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(LOG_TAG, "page  " + position);
                 if (activatedPointer != null) {
                     activatedPointer.setActivated(false);
                 }
@@ -122,9 +130,9 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             case R.id.bill_btn_emotion_normal:
             case R.id.bill_btn_emotion_bad:
             case R.id.bill_btn_emotion_good:
-                mActivatedEmotion.setActivated(false);
-                mActivatedEmotion = v;
-                mActivatedEmotion.setActivated(true);
+                activatedEmotion.setActivated(false);
+                activatedEmotion = v;
+                activatedEmotion.setActivated(true);
                 break;
             case R.id.global_navigation_btn_title:
                 changeTitleKey();
@@ -144,6 +152,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
         btnPrice.setTextColor(isIncome ?
             getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+        activatedBillCategory = null;
         initCategorySpan();
     }
 
@@ -192,9 +201,15 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     public void setActivatedBillCategory(View mActivatedBillCategory) {
         activatedBillCategory = mActivatedBillCategory;
+        updateTextCategory();
     }
 
     public View getActivatedBillCategory() {
         return activatedBillCategory;
+    }
+
+    public void updateTextCategory() {
+        tvCategory.setText(
+                ((TextView)activatedBillCategory.findViewById(R.id.grid_item_bill_category_text_name)).getText());
     }
 }
