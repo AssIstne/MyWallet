@@ -133,5 +133,5 @@ public class Bill implements Parcelable{
         SimpleDateFormat format = new SimpleDateFormat("MM.dd kk:mm", Locale.CHINA);
         return format.format(date) + " " + location;
     }
-
+    
 }

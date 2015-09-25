@@ -2,6 +2,7 @@ package com.assistne.mywallet.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.assistne.mywallet.R;
@@ -14,7 +15,7 @@ import com.assistne.mywallet.util.GlobalUtils;
 /**
  * Created by assistne on 15/9/25.
  */
-public class BillDetailActivity extends Activity {
+public class BillDetailActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,18 @@ public class BillDetailActivity extends Activity {
         findViewById(R.id.bill_detail_img_emotion).setBackgroundResource(bill.getEmotionRes());
         ((TextView)findViewById(R.id.bill_detail_text_category)).setText(category.getName());
         ((TextView)findViewById(R.id.bill_detail_text_info)).setText(bill.getInfo());
-        ((TextView)findViewById(R.id.bill_detail_text_price)).setText(GlobalUtils.formatPrice(bill.getPrice(), false) + "元");
+        TextView tvPrice = (TextView) findViewById(R.id.bill_detail_text_price);
+        tvPrice.setText(GlobalUtils.formatPrice(bill.getPrice(), false) + "元");
+        tvPrice.setTextColor(getResources().getColor(category.getType() > 0 ? R.color.green : R.color.red));
+        ((TextView)findViewById(R.id.bill_detail_text_description)).setText(bill.getDescription());
+
+        findViewById(R.id.bill_detail_span_delete).setOnClickListener(this);
+        findViewById(R.id.bill_detail_span_share).setOnClickListener(this);
+        findViewById(R.id.bill_detail_span_edit).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

@@ -12,7 +12,8 @@
         android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
         tools:layout="@layout/fragment_global_navigation_layout" />
     
-    <RelativeLayout 
+    <RelativeLayout
+        android:id="@+id/bill_detail_span_detail"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:paddingTop="15dp"
@@ -71,4 +72,100 @@
             android:textSize="24sp"
             tools:text="20.00元"/>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/bill_detail_text_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:background="@drawable/bill_bg"
+        android:layout_below="@id/bill_detail_span_detail"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        tools:text="晚饭"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <RelativeLayout
+            android:id="@+id/bill_detail_span_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_add_bill_btn_bg">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_delete"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/global_delete"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bill_detail_span_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_add_bill_btn_bg">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_share"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/bill_share"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/bill_detail_span_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_add_bill_btn_bg">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bill_edit"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/global_edit"/>
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
