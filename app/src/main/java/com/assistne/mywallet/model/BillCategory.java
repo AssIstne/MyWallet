@@ -13,6 +13,7 @@ public class BillCategory implements Parcelable{
     public static final int SYSTEM_SPENT = -1;
     public static final int CUSTOM_SPENT = -2;
     public static final int ALL_SPENT = -3;
+    public static final int NEW_CATEGORY = 0;
 
 
     private int id;
@@ -23,11 +24,7 @@ public class BillCategory implements Parcelable{
     private int backgroundResId;
     private int activated;
 
-    public BillCategory(String mName, int mBackgroundColor, int mType, int mParentId) {
-        name = mName;
-        backgroundResId = mBackgroundColor;
-        type = mType;
-        parentId = mParentId;
+    public BillCategory() {
         count = 0;
         activated = 1;
     }

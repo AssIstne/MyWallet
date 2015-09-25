@@ -20,6 +20,7 @@
 
 
         <ScrollView
+            android:id="@+id/bill_span_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/add_bill_bg"
@@ -105,7 +106,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/bill_span_category"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/selector_emotion_normal1"/>
+                    android:background="@drawable/selector_emotion_normal1"
+                    android:tag="1"
+                    />
                 <TextView
                     android:id="@+id/bill_text_emotion_normal"
                     android:layout_width="@dimen/emotion_size"
@@ -127,7 +130,8 @@
                     android:layout_toStartOf="@id/bill_btn_emotion_normal"
                     android:layout_marginRight="60dp"
                     android:layout_marginEnd="60dp"
-                    android:background="@drawable/selector_emotion_good1"/>
+                    android:background="@drawable/selector_emotion_good1"
+                    android:tag="2"/>
                 <TextView
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="wrap_content"
@@ -149,7 +153,8 @@
                     android:layout_toEndOf="@id/bill_btn_emotion_normal"
                     android:layout_marginLeft="60dp"
                     android:layout_marginStart="60dp"
-                    android:background="@drawable/selector_emotion_bad1"/>
+                    android:background="@drawable/selector_emotion_bad1"
+                    android:tag="0"/>
                 <TextView
                     android:layout_width="@dimen/emotion_size"
                     android:layout_height="wrap_content"
@@ -161,6 +166,7 @@
                     android:gravity="center"
                     android:textSize="14sp"
                     android:text="不爽"
+
                     />
 
                 <Button
@@ -187,10 +193,69 @@
                     android:layout_marginStart="10dp"
                     android:hint="说点什么..."
                     android:lineSpacingMultiplier="5"
-                    android:gravity="top|left"
+                    android:gravity="top|start"
                     android:background="@drawable/bill_bg"
                     />
+
+                <LinearLayout
+                    android:id="@+id/bill_span_extra_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/bill_edit_description"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <Button
+                        android:id="@+id/bill_btn_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/gray_for_text"
+                        android:textSize="14sp"
+                        />
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            >
+                            <ImageView
+                                android:id="@+id/bill_img_location"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/address"/>
+
+                            <TextView
+                                android:id="@+id/bill_text_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/bill_img_location"
+                                android:layout_toEndOf="@id/bill_img_location"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/gray_for_text"
+                                android:textSize="14sp"
+                                />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_below="@id/bill_span_extra_info"
+                    />
             </RelativeLayout>
+
         </ScrollView>
 
         <RelativeLayout

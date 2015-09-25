@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.customview.SimpleBillPriceLayout;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.model.Bill;
+import com.assistne.mywallet.model.BillCategory;
 
 import java.util.ArrayList;
 
@@ -20,16 +22,18 @@ import java.util.ArrayList;
  */
 public class BillsAdapter extends BaseAdapter {
 
-    private ArrayList<Bill> mdataList;
-    private LayoutInflater mInflater;
+    private ArrayList<Bill> dataList;
+    private LayoutInflater inflater;
+    private Context context;
 
-    public BillsAdapter(Context context, ArrayList<Bill> dataList) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mdataList = dataList;
+    public BillsAdapter(Context mContext, ArrayList<Bill> mDataList) {
+        inflater = LayoutInflater.from(mContext);
+        context = mContext;
+        dataList = mDataList;
     }
     @Override
     public int getCount() {
-        return mdataList.size() <= 4 ? mdataList.size() : 4;
+        return dataList.size() <= 4 ? dataList.size() : 4;
     }
 
     @Override
@@ -44,12 +48,12 @@ public class BillsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
 
             holder=new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.list_item_bill_simple, null);
+            convertView = inflater.inflate(R.layout.list_item_bill_simple, null);
             holder.emotion = (ImageView)convertView.findViewById(R.id.bill_simple_img_emotion);
             holder.category = (TextView)convertView.findViewById(R.id.bill_simple_text_category);
             holder.time_location = (TextView)convertView.findViewById(R.id.bill_simple_text_info);
@@ -60,12 +64,13 @@ public class BillsAdapter extends BaseAdapter {
 
             holder = (ViewHolder)convertView.getTag();
         }
-
-        Bill bill = mdataList.get(position);
-        holder.emotion.setBackgroundResource(bill.getEmotion());
-        holder.category.setText(bill.getCategory());
+        Bill bill = dataList.get(position);
+        BillCategory category = MyWalletDatabaseUtils.getInstance(context).getBillCategory(bill.getCategoryId());
+        holder.emotion.setBackgroundResource(bill.getEmotionRes());
+        holder.category.setText(category.getName());
         holder.time_location.setText(DateFormat.format("MM.dd hh:mm", bill.getDate()) + "  " + bill.getLocation());
         holder.price.setPriceText(bill.getPrice());
+        holder.price.setIsIncome(category.getType() > 0);
         return convertView;
     }
 
@@ -74,5 +79,14 @@ public class BillsAdapter extends BaseAdapter {
         TextView category;
         TextView time_location;
         SimpleBillPriceLayout price;
+    }
+
+    public void setDataList(ArrayList<Bill> mDataList) {
+        dataList.clear();
+        dataList.addAll(mDataList);
+    }
+
+    public ArrayList<Bill> getDataList() {
+        return dataList;
     }
 }

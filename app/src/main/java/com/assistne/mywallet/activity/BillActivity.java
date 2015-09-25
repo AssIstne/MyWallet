@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.assistne.mywallet.R;
@@ -17,9 +19,14 @@ import com.assistne.mywallet.adapter.BillCategoryFragmentAdapter;
 import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.fragment.GlobalNavigationFragment;
 import com.assistne.mywallet.fragment.KeyBoardFragment;
+import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
+import com.assistne.mywallet.util.GlobalUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by assistne on 15/9/13.
@@ -38,6 +45,11 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     private View activatedBillCategory;
     private ViewPager viewPager;
     private TextView tvCategory;
+    private Button btnDate;
+    private TextView tvLocation;
+    private EditText etDescription;
+    private View spanSaveBill;
+    private ScrollView spanMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +62,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         activatedEmotion.setOnClickListener(this);
         activatedEmotion.setActivated(true);
 
+        spanMain = (ScrollView)findViewById(R.id.bill_span_main);
         findViewById(R.id.bill_btn_emotion_normal).setOnClickListener(this);
         findViewById(R.id.bill_btn_emotion_good).setOnClickListener(this);
         findViewById(R.id.bill_btn_emotion_bad).setOnClickListener(this);
@@ -58,6 +71,27 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         tvCategory = (TextView)findViewById(R.id.bill_text_category);
         btnPrice = (Button)findViewById(R.id.bill_btn_price);
         btnPrice.setOnClickListener(this);
+        btnDate = (Button)findViewById(R.id.bill_btn_date);
+        btnDate.setText(GlobalUtils.getCurrentDate());
+        btnDate.setTag(Calendar.getInstance(Locale.CHINA).getTimeInMillis());
+        btnDate.setOnClickListener(this);
+        tvLocation = (TextView)findViewById(R.id.bill_text_location);
+        tvLocation.setText(GlobalUtils.getLocation(this));
+        spanSaveBill = findViewById(R.id.bill_span_ensure);
+        spanSaveBill.setOnClickListener(this);
+        etDescription = (EditText)findViewById(R.id.bill_edit_description);
+        etDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d(LOG_TAG, "focus change " + hasFocus);
+                spanMain.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        spanMain.fullScroll(View.FOCUS_DOWN);
+                    }
+                }, 100);
+            }
+        });
         viewPager = (ViewPager)findViewById(R.id.bill_pager_category);
         BillCategoryFragmentAdapter adapter = new BillCategoryFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -141,6 +175,10 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
                 Log.d(LOG_TAG, "click btn price");
                 showKeyboard();
                 break;
+            case R.id.bill_span_ensure:
+                saveBill();
+                finish();
+                break;
             default:
                 break;
         }
@@ -151,7 +189,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         isIncome = !isIncome;
         btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
         btnPrice.setTextColor(isIncome ?
-            getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+                getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
         activatedBillCategory = null;
         initCategorySpan();
     }
@@ -209,7 +247,25 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void updateTextCategory() {
-        tvCategory.setText(
-                ((TextView)activatedBillCategory.findViewById(R.id.grid_item_bill_category_text_name)).getText());
+        tvCategory.setText(((BillCategory)activatedBillCategory.getTag()).getName());
+    }
+
+    public void saveBill() {
+        int emotion = Integer.valueOf(String.valueOf(activatedEmotion.getTag()));
+        String location = tvLocation.getText().toString();
+        int categoryId = ((BillCategory)activatedBillCategory.getTag()).getId();
+        String description = etDescription.getText().toString();
+        float price = Float.valueOf(btnPrice.getText().toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.valueOf(String.valueOf(btnDate.getTag())));
+        Date date = calendar.getTime();
+        Bill bill = new Bill();
+        bill.setPrice(price);
+        bill.setEmotion(emotion);
+        bill.setCategoryId(categoryId);
+        bill.setDescription(description);
+        bill.setLocation(location);
+        bill.setDate(date);
+        MyWalletDatabaseUtils.getInstance(this).saveBill(bill);
     }
 }

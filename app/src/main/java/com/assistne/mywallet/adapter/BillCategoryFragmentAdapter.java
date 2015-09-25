@@ -56,6 +56,11 @@ public class BillCategoryFragmentAdapter extends FragmentPagerAdapter {
     public void setCategoryList(ArrayList<BillCategory> mCategoryList) {
         categoryList.clear();
         categoryList.addAll(mCategoryList);
-        categoryList.add(new BillCategory("+", R.drawable.round_btn_gray, 0 ,0));
+        BillCategory newCategory = new BillCategory();
+        newCategory.setName("+");
+        newCategory.setBackgroundResId(R.drawable.round_btn_gray);
+        newCategory.setType(BillCategory.NEW_CATEGORY);
+        newCategory.setParentId(0);
+        categoryList.add(newCategory);
     }
 }

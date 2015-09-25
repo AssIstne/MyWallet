@@ -3,26 +3,38 @@ package com.assistne.mywallet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.adapter.BillsAdapter;
+import com.assistne.mywallet.customview.MainItemsLayout;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.model.Bill;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by assistne on 15/9/7.
  */
-public class HomeActivity extends Activity implements View.OnClickListener{
+public class HomeActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener{
+    private static final String LOG_TAG = "test home act";
 
+    private BillsAdapter billsAdapter;
+
+    private ListView listView;
+    private MainItemsLayout spanBill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(LOG_TAG, "on home activity onCreate");
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home_layout);
@@ -32,41 +44,27 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 
         RelativeLayout mainAddBill = (RelativeLayout)findViewById(R.id.home_btn_add_bill);
         mainAddBill.setOnClickListener(this);
+        TextView tvBillMonth = (TextView) findViewById(R.id.home_text_bill_month);
+        tvBillMonth.setText(String.format("%tm月开支", Calendar.getInstance(Locale.CHINA)));
+        listView = (ListView)findViewById(R.id.home_list_bill);
+        listView.setOnItemClickListener(this);
+        spanBill = (MainItemsLayout)findViewById(R.id.home_span_bill);
 
-        ListView listView = (ListView)findViewById(R.id.home_list_bill);
+    }
 
-        ArrayList<Bill> list = new ArrayList<>();
-        Bill bill1 = new Bill();
-        bill1.setEmotion(R.drawable.main_good1);
-        bill1.setCategoryId(1);
-        bill1.setDate(new Date());
-        bill1.setLocation("香洲区海滨南路");
-        bill1.setPrice((float) 20.42);
-        list.add(bill1);
-        Bill bill2 = new Bill();
-        bill2.setEmotion(R.drawable.main_good1);
-        bill2.setCategoryId(1);
-        bill2.setDate(new Date());
-        bill2.setLocation("香洲区海滨南路");
-        bill2.setPrice((float) 30.42);
-        list.add(bill2);
-        Bill bill3 = new Bill();
-        bill3.setEmotion(R.drawable.main_good1);
-        bill3.setCategoryId(1);
-        bill3.setDate(new Date());
-        bill3.setLocation("香洲区海滨南路");
-        bill3.setPrice((float) 41.42);
-        list.add(bill3);
-        Bill bill4 = new Bill();
-        bill4.setEmotion(R.drawable.main_good1);
-        bill4.setCategoryId(1);
-        bill4.setDate(new Date());
-        bill4.setLocation("香洲区海滨南路");
-        bill4.setPrice((float) 104.42);
-        list.add(bill4);
-        BillsAdapter adapter = new BillsAdapter(this, list);
-        listView.setAdapter(adapter);
 
+    @Override
+    protected void onResume() {
+        Log.d(LOG_TAG, "on home activity onResume");
+        super.onResume();
+        ArrayList<Bill> list = MyWalletDatabaseUtils.getInstance(this).getBills(null, 4);
+        if (billsAdapter == null) {
+            billsAdapter = new BillsAdapter(this, list);
+            listView.setAdapter(billsAdapter);
+        } else {
+            billsAdapter.setDataList(list);
+            billsAdapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -78,5 +76,13 @@ public class HomeActivity extends Activity implements View.OnClickListener{
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bill bill = ((BillsAdapter)listView.getAdapter()).getDataList().get(position);
+        Intent intent = new Intent(this, BillDetailActivity.class);
+        intent.putExtra("bill", bill);
+        startActivity(intent);
     }
 }

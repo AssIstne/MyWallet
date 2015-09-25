@@ -65,6 +65,7 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
                 }
                 activatedBillCategory = view;
                 activatedBillCategory.setActivated(true);
+                activatedBillCategory.setTag(data.get(position));
                 activity.setActivatedBillCategory(activatedBillCategory);
             }
         });
@@ -108,14 +109,12 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
             }
             if (position == 0 && activity.getActivatedBillCategory() == null) {
                 view.setActivated(true);
+                view.setTag(data.get(position));
                 activity.setActivatedBillCategory(view);
             }
             return view;
         }
 
-        public void setData(ArrayList<BillCategory> data) {
-            this.data = data;
-        }
     }
 
     public void update(ArrayList<BillCategory> newData){

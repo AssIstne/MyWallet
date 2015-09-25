@@ -18,6 +18,7 @@ import com.assistne.mywallet.R;
  */
 public class MainItemsLayout extends LinearLayout {
 
+	public static final String LOG_TAG = "test drag span";
 	private final ViewDragHelper mDragHelper;
 
 	private View mTitle;
@@ -47,13 +48,11 @@ public class MainItemsLayout extends LinearLayout {
 
     @Override
     protected void onFinishInflate() {
-        Log.d("test", "on finishiinflate");
 		super.onFinishInflate();
         mTitle = findViewById(R.id.home_span_bill_title);
         mItemsField = findViewById(R.id.home_span_bill_content);
         mTitleArrow = (ImageView)findViewById(R.id.home_ic_bill_title_arrow);
         mTop = getPaddingTop() + mItemsField.getHeight();
-        Log.d("test", "finish --"+mTop+"    "+mItemsField.getHeight()+"    "+mItemsField.getMeasuredHeight());
     }
 
     public void maximize() {
@@ -61,14 +60,12 @@ public class MainItemsLayout extends LinearLayout {
     }
 
     public void minimize() {
-        Log.d("test", "minimize");
         smoothSlideTo(1f);
     }
 
     boolean smoothSlideTo(float slideOffset) {
         final int topBound = getPaddingTop();
         int y = (int) (topBound + slideOffset * mDragRange);
-
         if (mDragHelper.smoothSlideViewTo(mTitle, mTitle.getLeft(), y)) {
             ViewCompat.postInvalidateOnAnimation(this);
             return true;
@@ -115,8 +112,7 @@ public class MainItemsLayout extends LinearLayout {
 			final int topBound = getPaddingTop();
 			final int bottomBound = getHeight() - mTitle.getHeight() - mTitle.getPaddingBottom();
 
-			final int newTop = Math.min(Math.max(top, topBound), bottomBound);
-			return newTop;
+			return Math.min(Math.max(top, topBound), bottomBound);
 		}
 
 	}
@@ -130,7 +126,7 @@ public class MainItemsLayout extends LinearLayout {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d("test event", "on intercept touch event");
+        Log.d(LOG_TAG, "on intercept touch event");
 		final int action = MotionEventCompat.getActionMasked(ev);
 
 		if (( action != MotionEvent.ACTION_DOWN)) {
@@ -144,7 +140,7 @@ public class MainItemsLayout extends LinearLayout {
 
 		switch (action) {
 			case MotionEvent.ACTION_DOWN: {
-                Log.d("test event", "action down");
+                Log.d(LOG_TAG, "action down");
 				mInitialMotionX = x;
 				mInitialMotionY = y;
                 interceptTap = mDragHelper.isViewUnder(mTitle, (int) x, (int) y);
@@ -159,7 +155,7 @@ public class MainItemsLayout extends LinearLayout {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
-        Log.d("test event", "on touch event");
+        Log.d(LOG_TAG, "on touch event");
 		mDragHelper.processTouchEvent(ev);
 
 		final int action = ev.getAction();
@@ -169,19 +165,18 @@ public class MainItemsLayout extends LinearLayout {
         boolean isHeaderViewUnder = mDragHelper.isViewUnder(mTitle, (int) x, (int) y);
         switch (action & MotionEventCompat.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN: {
-                Log.d("test event", "on touch action down");
+                Log.d(LOG_TAG, "on touch action down");
 				mInitialMotionX = x;
 				mInitialMotionY = y;
 				break;
 			}
 
 			case MotionEvent.ACTION_UP: {
-                Log.d("test event", "on touch action up");
+                Log.d(LOG_TAG, "on touch action up");
 				final float dx = x - mInitialMotionX;
 				final float dy = y - mInitialMotionY;
 				final int slop = mDragHelper.getTouchSlop();
 				if (dx * dx + dy * dy < slop * slop && isHeaderViewUnder) {
-                    Log.d("test event", "mDragOffset   " +mDragOffset);
 					if (mDragOffset == 0) {
                         mTitleArrow.setBackgroundResource(R.drawable.home_bill_title_icon);
 						smoothSlideTo(1f);
@@ -222,9 +217,8 @@ public class MainItemsLayout extends LinearLayout {
 
     @Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		Log.d("test", "layout    "+t);
 		mDragRange = getHeight() - mTitle.getHeight() - getPaddingTop();
-        Log.d("test", ""+mTop+ "    " +mDragRange + "    " + mItemsField.getHeight());
+        Log.d(LOG_TAG, "onLayout" + getHeight() + "  " + mTitle.getHeight() +  "  " + getPaddingTop());
         mTitle.layout(
                 0,
                 mTop,
@@ -237,4 +231,6 @@ public class MainItemsLayout extends LinearLayout {
                 r,
                 mTop  + b);
 	}
+
+
 }

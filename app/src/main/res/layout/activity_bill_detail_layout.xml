@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/bill_detail_fragment_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
+        tools:layout="@layout/fragment_global_navigation_layout" />
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@id/bill_detail_fragment_navigation"
+        android:background="@drawable/bill_bg"
+        >
+
+        <ImageView
+            android:id="@+id/bill_detail_img_emotion"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            tools:background="@drawable/main_good1"/>
+
+        <TextView
+            android:id="@+id/bill_detail_text_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/bill_detail_img_emotion"
+            android:layout_toEndOf="@id/bill_detail_img_emotion"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:textSize="24sp"
+            tools:text="购物卡"/>
+
+        <TextView
+            android:id="@+id/bill_detail_text_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/bill_detail_img_emotion"
+            android:layout_toEndOf="@id/bill_detail_img_emotion"
+            android:layout_below="@id/bill_detail_text_category"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/gray"
+            tools:text="09.10 19:07  香洲区海滨南路"/>
+
+
+        <TextView
+            android:id="@+id/bill_detail_text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/red"
+            android:textSize="24sp"
+            tools:text="20.00元"/>
+    </RelativeLayout>
+</RelativeLayout>

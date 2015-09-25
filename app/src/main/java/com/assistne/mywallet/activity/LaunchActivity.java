@@ -9,6 +9,7 @@ import android.view.Window;
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.db.MyWalletDatabaseHelper;
 import com.assistne.mywallet.util.Constants;
+import com.assistne.mywallet.util.GlobalUtils;
 
 /**
  * Created by assistne on 15/9/7.
@@ -33,6 +34,8 @@ public class LaunchActivity extends Activity {
                 finish();
             }
         }, delayTime);
+
+        GlobalUtils.updateLocation(this);
     }
 
 //    重写返回键点击事件，阻止中途退出LaunchActivity

@@ -19,6 +19,8 @@ public class SimpleBillPriceLayout extends RelativeLayout {
     private TextView mPostPrice;
     private String moneySymbol;
 
+    private Boolean isIncome = false;
+
     public SimpleBillPriceLayout(Context context) {
         this(context, null);
     }
@@ -38,13 +40,19 @@ public class SimpleBillPriceLayout extends RelativeLayout {
         mPostPrice = (TextView)findViewById(R.id.price_script_text_suffix);
 
         setPriceText(fPrice);
-
     }
 
     public void setPriceText(float price) {
         Log.d("test", ""+price);
         mPrePrice.setText(moneySymbol + (int)price + ".");
-        mPostPrice.setText(String.valueOf((int)(price*100-(int)price*100)));
+        mPostPrice.setText(String.valueOf((int) (price * 100 - (int) price * 100)));
 
+    }
+
+    public void setIsIncome(boolean mIsIncome) {
+        isIncome = mIsIncome;
+        int resColorId = isIncome ? R.color.green : R.color.red;
+        mPrePrice.setTextColor(getResources().getColor(resColorId));
+        mPostPrice.setTextColor(getResources().getColor(resColorId));
     }
 }
