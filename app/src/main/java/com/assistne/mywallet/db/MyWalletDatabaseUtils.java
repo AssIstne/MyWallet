@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
 import com.assistne.mywallet.util.Constants;
-import com.assistne.mywallet.util.GlobalUtils;
 
 import java.util.ArrayList;
 
@@ -100,7 +99,7 @@ public class MyWalletDatabaseUtils {
                         String.valueOf(bill.getCategoryId()),
                         bill.getDescription(),
                         bill.getLocation(),
-                        String.valueOf(bill.getDate().getTime())
+                        String.valueOf(bill.getDateForMills())
                 });
     }
 
@@ -122,7 +121,7 @@ public class MyWalletDatabaseUtils {
                 bill.setCategoryId(cursor.getInt(cursor.getColumnIndex("category_id")));
                 bill.setDescription(cursor.getString(cursor.getColumnIndex("description")));
                 bill.setPrice(cursor.getFloat(cursor.getColumnIndex("price")));
-                bill.setDate(GlobalUtils.getDateFromMills(cursor.getLong(cursor.getColumnIndex("date"))));
+                bill.setDateForMills(cursor.getLong(cursor.getColumnIndex("date")));
                 list.add(bill);
             } while (cursor.moveToNext());
         }

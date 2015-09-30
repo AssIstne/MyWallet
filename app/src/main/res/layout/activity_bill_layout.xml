@@ -44,7 +44,7 @@
                     android:layout_marginBottom="20dp"
                     android:textSize="30sp"
                     android:textColor="@color/gray_for_text"
-                    android:text="餐饮"/>
+                    />
 
                 <Button
                     android:id="@+id/bill_btn_price"
@@ -59,7 +59,7 @@
                     android:textSize="30sp"
                     android:textColor="@color/red"
                     android:background="@android:color/transparent"
-                    android:text="0.00"
+                    tools:text="0.00"
                     />
 
                 <ImageView

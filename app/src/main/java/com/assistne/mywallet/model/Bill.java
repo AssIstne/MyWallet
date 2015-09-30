@@ -1,12 +1,15 @@
 package com.assistne.mywallet.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.assistne.mywallet.R;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
+import com.assistne.mywallet.util.GlobalUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
 
 /**
@@ -20,15 +23,15 @@ public class Bill implements Parcelable{
     public static final int[] EMOTIONS = {R.drawable.main_bad1, R.drawable.main_normal1, R.drawable.main_good1};
     private int emotion = EMOTION_NORMAL;
     private String location = "";
-    private int categoryId;
-    private String description;
+    private int categoryId = BillCategory.NO_CATEGORY;
+    private String description = "";
     private float price = (float)0.00;
-    private Date date ;
+    private long dateForMills;
     private int id;
 
 
     public Bill() {
-
+        dateForMills = Calendar.getInstance(Locale.CHINA).getTimeInMillis();
     }
 
     private Bill(Parcel in) {
@@ -38,7 +41,7 @@ public class Bill implements Parcelable{
         categoryId = in.readInt();
         description = in.readString();
         price = in.readFloat();
-        date = (Date)in.readSerializable();
+        dateForMills = in.readLong();
     }
 
     public int getId() {
@@ -86,12 +89,12 @@ public class Bill implements Parcelable{
         this.price = price;
     }
 
-    public Date getDate() {
-        return date;
+    public long getDateForMills() {
+        return dateForMills;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateForMills(long dateForMills) {
+        this.dateForMills = dateForMills;
     }
 
     public String getDescription() {
@@ -116,7 +119,7 @@ public class Bill implements Parcelable{
         dest.writeInt(categoryId);
         dest.writeString(description);
         dest.writeFloat(price);
-        dest.writeSerializable(date);
+        dest.writeLong(dateForMills);
     }
 
     public static final Parcelable.Creator<Bill> CREATOR = new Parcelable.Creator<Bill>() {
@@ -131,7 +134,10 @@ public class Bill implements Parcelable{
 
     public String getInfo() {
         SimpleDateFormat format = new SimpleDateFormat("MM.dd kk:mm", Locale.CHINA);
-        return format.format(date) + " " + location;
+        return format.format(GlobalUtils.getDateFromMills(dateForMills)) + " " + location;
     }
-    
+
+    public BillCategory getBillCategory(Context context) {
+        return MyWalletDatabaseUtils.getInstance(context).getBillCategory(categoryId);
+    }
 }

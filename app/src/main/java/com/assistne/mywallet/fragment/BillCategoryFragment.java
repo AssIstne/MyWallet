@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.activity.BillActivity;
+import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
 
     private int position;
 
-    private View activatedBillCategory;
     private GridView gridView;
     private BillActivity activity;
     private ArrayList<BillCategory> data;
@@ -59,14 +59,8 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                activatedBillCategory = activity.getActivatedBillCategory();
-                if (activatedBillCategory != null) {
-                    activatedBillCategory.setActivated(false);
-                }
-                activatedBillCategory = view;
-                activatedBillCategory.setActivated(true);
-                activatedBillCategory.setTag(data.get(position));
-                activity.setActivatedBillCategory(activatedBillCategory);
+                view.setTag(data.get(position));
+                activity.setActivatedBillCategory(view);
             }
         });
         return root;
@@ -99,19 +93,32 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view;
+            BillCategory billCategory = data.get(position);
             if (convertView == null) {
                 view = LayoutInflater.from(context).inflate(R.layout.grid_item_bill_category_button, null);
-                BillCategory billCategory = data.get(position);
                 view.findViewById(R.id.grid_item_bill_category_img_bg).setBackgroundResource(billCategory.getBackgroundResId());
                 ((TextView)view.findViewById(R.id.grid_item_bill_category_text_name)).setText(billCategory.getName());
             } else {
                 view = convertView;
             }
-            if (position == 0 && activity.getActivatedBillCategory() == null) {
-                view.setActivated(true);
+            if (view.getTag() == null) {
                 view.setTag(data.get(position));
-                activity.setActivatedBillCategory(view);
             }
+            Bill bill = activity.getCurrentBill();
+            if (bill.getCategoryId() == BillCategory.NO_CATEGORY) {
+//                新增bill
+                if (position == 0 && activity.getActivatedBillCategory() == null) {
+//                    初始化默认激活第一个类目
+                    activity.setActivatedBillCategory(view);
+                }
+
+            } else {
+//                修改bill
+                if (billCategory.getId() == bill.getCategoryId()) {
+                    activity.setActivatedBillCategory(view);
+                }
+            }
+
             return view;
         }
 

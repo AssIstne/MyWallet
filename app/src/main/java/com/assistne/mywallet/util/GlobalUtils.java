@@ -161,6 +161,13 @@ public class GlobalUtils {
         return df.format(c.getTime());
     }
 
+    public static String getFormatDateFromMills(long mills) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd kk:mm", Locale.CHINA);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mills);
+        return df.format(calendar.getTime());
+    }
+
     public static long getCurrentDate(String date) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd kk:mm", Locale.CHINA);
         try {

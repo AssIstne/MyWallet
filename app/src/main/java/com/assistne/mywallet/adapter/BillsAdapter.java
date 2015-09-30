@@ -68,7 +68,7 @@ public class BillsAdapter extends BaseAdapter {
         BillCategory category = MyWalletDatabaseUtils.getInstance(context).getBillCategory(bill.getCategoryId());
         holder.emotion.setBackgroundResource(bill.getEmotionRes());
         holder.category.setText(category.getName());
-        holder.time_location.setText(DateFormat.format("MM.dd hh:mm", bill.getDate()) + "  " + bill.getLocation());
+        holder.time_location.setText(DateFormat.format("MM.dd hh:mm", bill.getDateForMills()) + "  " + bill.getLocation());
         holder.price.setPriceText(bill.getPrice());
         holder.price.setIsIncome(category.getType() > 0);
         return convertView;

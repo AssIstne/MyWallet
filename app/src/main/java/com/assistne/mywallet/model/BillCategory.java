@@ -14,6 +14,7 @@ public class BillCategory implements Parcelable{
     public static final int CUSTOM_SPENT = -2;
     public static final int ALL_SPENT = -3;
     public static final int NEW_CATEGORY = 0;
+    public static final int NO_CATEGORY = -1;
 
 
     private int id;
