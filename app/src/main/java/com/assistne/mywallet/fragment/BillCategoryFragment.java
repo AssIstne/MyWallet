@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.activity.BillActivity;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
 
@@ -59,8 +59,37 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setTag(data.get(position));
-                activity.setActivatedBillCategory(view);
+                BillCategory category = (BillCategory) view.getTag();
+                if (category.getType() == BillCategory.NEW_CATEGORY) {
+                    activity.showCategoryType();
+                } else {
+                    view.setTag(data.get(position));
+                    activity.setActivatedBillCategory(view);
+                }
+            }
+        });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
+                RemoveCategoryDialogFragment dialogFragment = new RemoveCategoryDialogFragment();
+                RemoveCategoryDialogFragment.Callback callback = new RemoveCategoryDialogFragment.Callback() {
+                    @Override
+                    public void remove() {
+                        BillCategory category = (BillCategory) view.getTag();
+                        category.setActivated(0);
+                        MyWalletDatabaseUtils.getInstance(activity).updateCategory(category);
+                        activity.setActivatedBillCategory(null);
+                        activity.initCategorySpan();
+                    }
+
+                    @Override
+                    public void edit() {
+
+                    }
+                };
+                dialogFragment.setCallback(callback);
+                dialogFragment.show(activity.getFragmentManager(), null);
+                return false;
             }
         });
         return root;
@@ -125,12 +154,8 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
     }
 
     public void update(ArrayList<BillCategory> newData){
-        Log.d(LOG_TAG, "update");
         data.clear();
         data.addAll(newData);
-        for (BillCategory billCategory : data) {
-            Log.d(LOG_TAG, billCategory.getName());
-        }
         ((GridViewAdapter)gridView.getAdapter()).notifyDataSetChanged();
     }
 

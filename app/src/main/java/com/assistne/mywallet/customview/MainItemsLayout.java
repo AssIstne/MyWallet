@@ -5,7 +5,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -126,7 +125,6 @@ public class MainItemsLayout extends LinearLayout {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(LOG_TAG, "on intercept touch event");
 		final int action = MotionEventCompat.getActionMasked(ev);
 
 		if (( action != MotionEvent.ACTION_DOWN)) {
@@ -140,7 +138,6 @@ public class MainItemsLayout extends LinearLayout {
 
 		switch (action) {
 			case MotionEvent.ACTION_DOWN: {
-                Log.d(LOG_TAG, "action down");
 				mInitialMotionX = x;
 				mInitialMotionY = y;
                 interceptTap = mDragHelper.isViewUnder(mTitle, (int) x, (int) y);
@@ -155,7 +152,6 @@ public class MainItemsLayout extends LinearLayout {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
-        Log.d(LOG_TAG, "on touch event");
 		mDragHelper.processTouchEvent(ev);
 
 		final int action = ev.getAction();
@@ -165,14 +161,12 @@ public class MainItemsLayout extends LinearLayout {
         boolean isHeaderViewUnder = mDragHelper.isViewUnder(mTitle, (int) x, (int) y);
         switch (action & MotionEventCompat.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN: {
-                Log.d(LOG_TAG, "on touch action down");
 				mInitialMotionX = x;
 				mInitialMotionY = y;
 				break;
 			}
 
 			case MotionEvent.ACTION_UP: {
-                Log.d(LOG_TAG, "on touch action up");
 				final float dx = x - mInitialMotionX;
 				final float dy = y - mInitialMotionY;
 				final int slop = mDragHelper.getTouchSlop();
@@ -218,7 +212,6 @@ public class MainItemsLayout extends LinearLayout {
     @Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		mDragRange = getHeight() - mTitle.getHeight() - getPaddingTop();
-        Log.d(LOG_TAG, "onLayout" + getHeight() + "  " + mTitle.getHeight() +  "  " + getPaddingTop());
         mTitle.layout(
                 0,
                 mTop,

@@ -67,7 +67,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
-            android:layout_centerVertical="true"
+            android:layout_alignBaseline="@id/bill_detail_text_category"
             android:textColor="@color/red"
             android:textSize="24sp"
             tools:text="20.00元"/>

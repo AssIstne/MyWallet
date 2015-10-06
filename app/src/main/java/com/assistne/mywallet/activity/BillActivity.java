@@ -1,10 +1,12 @@
 package com.assistne.mywallet.activity;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.adapter.BillCategoryFragmentAdapter;
 import com.assistne.mywallet.db.MyWalletDatabaseUtils;
+import com.assistne.mywallet.fragment.AddActivatedCategoryFragment;
 import com.assistne.mywallet.fragment.GlobalNavigationFragment;
 import com.assistne.mywallet.fragment.KeyBoardFragment;
 import com.assistne.mywallet.model.Bill;
@@ -27,14 +30,17 @@ import java.util.ArrayList;
 /**
  * Created by assistne on 15/9/13.
  */
-public class BillActivity extends FragmentActivity implements View.OnClickListener {
+public class BillActivity extends FragmentActivity implements View.OnClickListener, View.OnTouchListener {
 
     private String LOG_TAG = "test act bill";
+
+    public static final int FROM_BILL_DETAIL = 1;
 
     private boolean isIncome = false;
     private boolean isShowingKeyboard = false;
 
     private Bill currentBill;
+    private FragmentManager fragmentManager;
 
     private Button btnTitleKey;
     private Button btnPrice;
@@ -60,6 +66,8 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         findViews();
         initNavigation();
 
+        fragmentManager = getFragmentManager();
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             currentBill = bundle.getParcelable("bill");
@@ -68,15 +76,11 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             currentBill = new Bill();
             currentBill.setLocation(GlobalUtils.getLocation(this));
         }
-
         if (currentBill.getCategoryId() != BillCategory.NO_CATEGORY) {
             isIncome = currentBill.getBillCategory(this).getType() > 0;
         }
-        if (isIncome) {
-            changeTitleKey();
-        }
-        Log.d(LOG_TAG, "emotion " + currentBill.getEmotion());
-        int emotionViewId = 0;
+        updateTitleAndPrice();
+        int emotionViewId;
         switch (currentBill.getEmotion()) {
             case Bill.EMOTION_BAD:
                 emotionViewId = R.id.bill_btn_emotion_bad;
@@ -94,7 +98,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         btnPrice.setText(GlobalUtils.formatPrice(currentBill.getPrice(), false));
         btnDate.setText(GlobalUtils.getFormatDateFromMills(currentBill.getDateForMills()));
         btnDate.setTag(currentBill.getDateForMills());
-
+        etDescription.setText(currentBill.getDescription());
         tvLocation.setText(currentBill.getLocation());
 
         BillCategoryFragmentAdapter adapter = new BillCategoryFragmentAdapter(getSupportFragmentManager());
@@ -146,6 +150,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
         etDescription = (EditText)findViewById(R.id.bill_edit_description);
         etDescription.setOnClickListener(this);
+        etDescription.setOnTouchListener(this);
 
         tvCategory = (TextView)findViewById(R.id.bill_text_category);
 
@@ -174,7 +179,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
 //    初始化账单类目区域
-    private void initCategorySpan() {
+    public void initCategorySpan() {
         ArrayList<BillCategory> data = MyWalletDatabaseUtils.getInstance(this)
                 .getActivatedBillCategory(isIncome ? BillCategory.ALL_INCOME : BillCategory.ALL_SPENT);
         BillCategoryFragmentAdapter adapter = (BillCategoryFragmentAdapter)viewPager.getAdapter();
@@ -195,7 +200,6 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         } else {
             spanPointers.setVisibility(View.GONE);
         }
-
     }
     @Override
     public void onClick(View v) {
@@ -211,20 +215,12 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
                 changeTitleKey();
                 break;
             case R.id.bill_btn_price:
-                Log.d(LOG_TAG, "click btn price");
                 showKeyboard();
                 break;
             case R.id.bill_span_ensure:
                 saveBill();
+                setResult(Activity.RESULT_OK);
                 finish();
-                break;
-            case R.id.bill_edit_description:
-                spanMain.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        spanMain.fullScroll(View.FOCUS_DOWN);
-                    }
-                }, 100);
                 break;
             default:
                 break;
@@ -234,16 +230,20 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     public void changeTitleKey() {
         isIncome = !isIncome;
-        btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
-        btnPrice.setTextColor(isIncome ?
-                getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+        updateTitleAndPrice();
         activatedBillCategory = null;
         currentBill.setCategoryId(BillCategory.NO_CATEGORY);
         initCategorySpan();
     }
 
+    private void updateTitleAndPrice() {
+        btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
+        btnPrice.setTextColor(isIncome ?
+                getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+    }
+
+
     public void showKeyboard() {
-        Log.d(LOG_TAG, "show keyboard");
         if (!isShowingKeyboard) {
             KeyBoardFragment keyBoardFragment = new KeyBoardFragment();
             keyBoardFragment.setCallBack(keyboardCallBack);
@@ -251,7 +251,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             bundle.putBoolean(KeyBoardFragment.IS_INCOME, isIncome);
             bundle.putString(KeyBoardFragment.PRICE, btnPrice.getText().toString());
             keyBoardFragment.setArguments(bundle);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.bill_span_root, keyBoardFragment);
             transaction.addToBackStack(null);
             isShowingKeyboard = true;
@@ -261,8 +261,12 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         isShowingKeyboard = false;
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     KeyBoardFragment.KeyboardCallBack keyboardCallBack = new KeyBoardFragment.KeyboardCallBack() {
@@ -279,24 +283,29 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         @Override
         public void removeKeyboard() {
             if (isShowingKeyboard) {
-                getFragmentManager().popBackStack();
+                fragmentManager.popBackStack();
                 isShowingKeyboard = false;
             }
         }
     };
 
     public void setActivatedBillCategory(View mActivatedBillCategory) {
+        if (mActivatedBillCategory == null) {
+            if (activatedBillCategory != null) {
+                activatedBillCategory.setActivated(false);
+            }
+            activatedBillCategory = null;
+            return;
+        }
         if (activatedBillCategory != null &&
                 (((BillCategory)activatedBillCategory.getTag()).getId() ==
                         ((BillCategory)mActivatedBillCategory.getTag()).getId())) {
 //            申请激活的类目已经激活则不处理
             return;
         } else if (activatedBillCategory != null) {
-            Log.d(LOG_TAG, "set false");
             activatedBillCategory.setActivated(false);
         }
         activatedBillCategory = mActivatedBillCategory;
-        Log.d(LOG_TAG, "set true");
         activatedBillCategory.setActivated(true);
         updateTextCategory();
     }
@@ -306,7 +315,9 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void updateTextCategory() {
-        tvCategory.setText(((BillCategory)activatedBillCategory.getTag()).getName());
+        if (tvCategory != null && activatedBillCategory != null && activatedBillCategory.getTag() != null) {
+            tvCategory.setText(((BillCategory)activatedBillCategory.getTag()).getName());
+        }
     }
 
     public void saveBill() {
@@ -316,14 +327,18 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         String description = etDescription.getText().toString();
         float price = Float.valueOf(btnPrice.getText().toString());
         long date = (long)btnDate.getTag();
-        Bill bill = new Bill();
-        bill.setPrice(price);
-        bill.setEmotion(emotion);
-        bill.setCategoryId(categoryId);
-        bill.setDescription(description);
-        bill.setLocation(location);
-        bill.setDateForMills(date);
-        MyWalletDatabaseUtils.getInstance(this).saveBill(bill);
+        currentBill.setPrice(price);
+        currentBill.setEmotion(emotion);
+        currentBill.setCategoryId(categoryId);
+        currentBill.setDescription(description);
+        currentBill.setLocation(location);
+        currentBill.setDateForMills(date);
+        if (currentBill.getId() == 0) {
+            MyWalletDatabaseUtils.getInstance(this).saveBill(currentBill);
+        } else {
+            MyWalletDatabaseUtils.getInstance(this).updateBill(currentBill);
+        }
+
     }
 
 
@@ -337,5 +352,29 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     public Bill getCurrentBill() {
         return currentBill;
+    }
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        spanMain.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                spanMain.fullScroll(View.FOCUS_DOWN);
+            }
+        }, 100);
+        return false;
+    }
+
+    public void showCategoryType() {
+        AddActivatedCategoryFragment categoryFragment = new AddActivatedCategoryFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.bill_span_root, categoryFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void removeCategoryFragment() {
+        fragmentManager.popBackStack();
     }
 }

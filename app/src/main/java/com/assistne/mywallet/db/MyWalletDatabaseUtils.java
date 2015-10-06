@@ -103,6 +103,24 @@ public class MyWalletDatabaseUtils {
                 });
     }
 
+    public void updateBill(Bill bill) {
+        db.execSQL("update Bill set price=?, emotion=?, category_id=?, description=?, location=?, date=? where id=?",
+                new String[]{
+                        String.valueOf(bill.getPrice()),
+                        String.valueOf(bill.getEmotion()),
+                        String.valueOf(bill.getCategoryId()),
+                        bill.getDescription(),
+                        bill.getLocation(),
+                        String.valueOf(bill.getDateForMills()),
+                        String.valueOf(bill.getId())
+                });
+    }
+
+    public void deleteBill(int id) {
+        db.execSQL("delete from Bill where id=?",
+                new String[]{ String.valueOf(id) });
+    }
+
     public ArrayList<Bill> getBills(String whereClause, int limit) {
         ArrayList<Bill> list = new ArrayList<>();
         String sql = "select id, emotion, location, category_id, description, price, date from Bill " +
@@ -127,5 +145,18 @@ public class MyWalletDatabaseUtils {
         }
         cursor.close();
         return list;
+    }
+
+    public void updateCategory(BillCategory category) {
+        db.execSQL("update Category set activated=?, background_res_id=?, count=?, parent_id=?, name=?, type=? where id=?",
+                new String[]{
+                        String.valueOf(category.getActivated()),
+                        String.valueOf(category.getBackgroundResId()),
+                        String.valueOf(category.getCount()),
+                        String.valueOf(category.getParentId()),
+                        category.getName(),
+                        String.valueOf(category.getType()),
+                        String.valueOf(category.getId())
+                });
     }
 }

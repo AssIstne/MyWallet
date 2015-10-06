@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.assistne.mywallet.R;
+import com.assistne.mywallet.db.MyWalletDatabaseUtils;
+import com.assistne.mywallet.fragment.DeleteWarningDialogFragment;
 import com.assistne.mywallet.fragment.GlobalNavigationFragment;
 import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
@@ -17,7 +19,6 @@ import com.assistne.mywallet.util.GlobalUtils;
  * Created by assistne on 15/9/25.
  */
 public class BillDetailActivity extends Activity implements View.OnClickListener{
-
     private Bill bill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,14 @@ public class BillDetailActivity extends Activity implements View.OnClickListener
         TextView tvPrice = (TextView) findViewById(R.id.bill_detail_text_price);
         tvPrice.setText(GlobalUtils.formatPrice(bill.getPrice(), false) + "元");
         tvPrice.setTextColor(getResources().getColor(category.getType() > 0 ? R.color.green : R.color.red));
-        ((TextView)findViewById(R.id.bill_detail_text_description)).setText(bill.getDescription());
+        TextView tvDescription = (TextView)findViewById(R.id.bill_detail_text_description);
+        if (bill.getDescription().length() == 0) {
+            tvDescription.setVisibility(View.GONE);
+        } else {
+            tvDescription.setVisibility(View.VISIBLE);
+            tvDescription.setText(bill.getDescription());
+        }
+
 
         findViewById(R.id.bill_detail_span_delete).setOnClickListener(this);
         findViewById(R.id.bill_detail_span_share).setOnClickListener(this);
@@ -49,14 +57,37 @@ public class BillDetailActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bill_detail_span_delete:
+                DeleteWarningDialogFragment dialogFragment = new DeleteWarningDialogFragment();
+                dialogFragment.setCallback(new DeleteWarningDialogFragment.Callback() {
+                    @Override
+                    public void positive() {
+                        MyWalletDatabaseUtils.getInstance(BillDetailActivity.this).deleteBill(bill.getId());
+                        finish();
+                    }
+
+                    @Override
+                    public void negative() {
+
+                    }
+                });
+                dialogFragment.show(getFragmentManager(), "delete");
                 break;
             case R.id.bill_detail_span_edit:
                 Intent intent = new Intent(this, BillActivity.class);
                 intent.putExtra("bill", bill);
-                startActivity(intent);
+                startActivityForResult(intent, BillActivity.FROM_BILL_DETAIL);
                 break;
             case R.id.bill_detail_span_share:
                 break;
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == BillActivity.FROM_BILL_DETAIL && resultCode == Activity.RESULT_OK) {
+            finish();
+        }
+    }
+
 }

@@ -4,6 +4,7 @@
     <string name="global_ensure">确定</string>
     <string name="global_delete">删除</string>
     <string name="global_edit">编辑</string>
+    <string name="global_cancel">取消</string>
 
     <string name="bill_add">记一笔</string>
     <string name="bill_life">流水</string>
@@ -15,4 +16,11 @@
     <string name="bill_save">保存</string>
     <string name="bill_share">分享</string>
 
+    <string name="dialog_delete_bill">确定要删除记录吗?</string>
+
+    <string name="dialog_edit_category">编辑分类</string>
+    <string name="dialog_remove_category">移出常用分类</string>
+
+    <string name="category_type">支出分类</string>
+    <string name="category_search_hint">搜索或添加分类</string>
 </resources>
