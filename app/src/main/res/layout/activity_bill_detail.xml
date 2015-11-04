@@ -10,15 +10,23 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
-        tools:layout="@layout/fragment_global_navigation_layout" />
-    
+        tools:layout="@layout/fragment_global_navigation" />
+
+    <ImageView
+        android:id="@+id/bill_detail_img_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bill_detail_fragment_navigation"
+        android:visibility="gone"
+        android:adjustViewBounds="true"
+        />
     <RelativeLayout
         android:id="@+id/bill_detail_span_detail"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
-        android:layout_below="@id/bill_detail_fragment_navigation"
+        android:layout_below="@id/bill_detail_img_bill"
         android:background="@drawable/bill_bg"
         >
 
@@ -41,7 +49,7 @@
             android:layout_toEndOf="@id/bill_detail_img_emotion"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:textSize="24sp"
+            android:textSize="@dimen/font_huge"
             tools:text="购物卡"/>
 
         <TextView
@@ -54,7 +62,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:textSize="15sp"
+            android:textSize="@dimen/font_small"
             android:textColor="@color/gray"
             tools:text="09.10 19:07  香洲区海滨南路"/>
 
@@ -67,9 +75,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
-            android:layout_alignBaseline="@id/bill_detail_text_category"
+            android:layout_centerVertical="true"
             android:textColor="@color/red"
-            android:textSize="24sp"
+            android:textSize="@dimen/font_huge"
             tools:text="20.00元"/>
     </RelativeLayout>
 
@@ -77,7 +85,7 @@
         android:id="@+id/bill_detail_text_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_large"
         android:background="@drawable/bill_bg"
         android:layout_below="@id/bill_detail_span_detail"
         android:gravity="center_vertical"
@@ -113,6 +121,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/white"
+                android:textSize="@dimen/font_small"
                 android:text="@string/global_delete"/>
         </RelativeLayout>
 
@@ -138,7 +147,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/white"
-                android:text="@string/bill_share"/>
+                android:textSize="@dimen/font_small"
+                android:text="@string/global_share"/>
         </RelativeLayout>
 
 
@@ -165,6 +175,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/white"
+                android:textSize="@dimen/font_small"
                 android:text="@string/global_edit"/>
         </RelativeLayout>
     </LinearLayout>

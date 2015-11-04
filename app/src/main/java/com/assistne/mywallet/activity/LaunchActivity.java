@@ -22,7 +22,7 @@ public class LaunchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_launch_layout);
+        setContentView(R.layout.activity_launch);
         new MyWalletDatabaseHelper(this, Constants.DATABASE, null, 1).getWritableDatabase();
 //        等待一段时间后启动MainActivity
         Handler handler = new Handler();

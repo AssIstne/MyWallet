@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/bill_spend"
+        android:text="@string/global_spend"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:drawableRight="@drawable/key_bill_type_sel"

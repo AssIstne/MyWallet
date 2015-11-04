@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/record_span_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/record_fragment_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_nav"
+        android:layout_alignParentTop="true"
+        android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
+        tools:layout="@layout/fragment_global_navigation" />
+
+    <FrameLayout
+        android:id="@+id/record_span_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/record_span_bar"
+        android:layout_marginTop="@dimen/offset_neg_15"/>
+
+    <LinearLayout
+        android:id="@id/record_span_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/record_fragment_navigation"
+        >
+
+        <Button
+            android:id="@+id/record_btn_life"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/select_record_btn_bar"
+            android:text="@string/btn_bill_life"/>
+
+        <Button
+            android:id="@+id/record_btn_statistic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/select_record_btn_bar"
+            android:text="@string/btn_bill_statistic"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,26 +1,42 @@
 <resources>
     <string name="app_name">山寨钱钱</string>
 
+    <string name="symbol_rmb">￥</string>
+
     <string name="global_ensure">确定</string>
     <string name="global_delete">删除</string>
     <string name="global_edit">编辑</string>
     <string name="global_cancel">取消</string>
+    <string name="global_modify">修改</string>
+    <string name="global_income">收入</string>
+    <string name="global_spend">支出</string>
+    <string name="global_save">保存</string>
+    <string name="global_share">分享</string>
+    <string name="global_record">记账</string>
 
-    <string name="bill_add">记一笔</string>
-    <string name="bill_life">流水</string>
-    <string name="bill_review">统计</string>
-    <string name="bill_rmb_symbol">￥</string>
-    <string name="bill_income">收入</string>
-    <string name="bill_spend">支出</string>
-    <string name="bill_save_and_share">保存并分享</string>
-    <string name="bill_save">保存</string>
-    <string name="bill_share">分享</string>
+    <string name="btn_add_bill">记一笔</string>
+    <string name="btn_bill_life">流水</string>
+    <string name="btn_bill_statistic">统计</string>
+    <string name="btn_save_and_share">保存并分享</string>
+    <string name="btn_camera">拍照</string>
+    <string name="btn_album">选择本地图片</string>
+    <string name="btn_add_bill_fast">快捷记账</string>
+    <string name="btn_add_bill_camera">拍照记账</string>
 
-    <string name="dialog_delete_bill">确定要删除记录吗?</string>
+    <string name="dialog_title_delete_record">确定要删除记录吗?</string>
+    <string name="dialog_title_edit_category">编辑分类</string>
+    <string name="dialog_item_modify_category">修改分类</string>
+    <string name="dialog_item_remove_category">移出常用分类</string>
 
-    <string name="dialog_edit_category">编辑分类</string>
-    <string name="dialog_remove_category">移出常用分类</string>
+    <string name="title_category_type_out">支出分类</string>
+    <string name="title_category_type_in">收入分类</string>
 
-    <string name="category_type">支出分类</string>
-    <string name="category_search_hint">搜索或添加分类</string>
+    <string name="hint_category_search_or_add">搜索或添加分类</string>
+
+    <string name="label_used">已用</string>
+    <string name="label_unused">预算剩余</string>
+
+    <string name="btn_review_day">日回顾</string>
+    <string name="btn_review_week">周回顾</string>
+    <string name="btn_review_month">月回顾</string>
 </resources>

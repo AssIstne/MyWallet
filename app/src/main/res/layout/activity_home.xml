@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/snippet_home_navigation_layout"/>
+    <include layout="@layout/snippet_home_navigation"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="@dimen/font_large"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="80dp"
                 android:text="买房，拥有自己的家"
@@ -73,7 +73,7 @@
                 android:layout_below="@id/main_wish_dream"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/white"
                 android:text="1437天 06:33:10"
                 />
@@ -105,11 +105,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_centerVertical="true"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/font_large"
                         tools:text="09月开支"
                         />
 
                     <TextView
+                        android:id="@+id/home_text_budget_unused"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -117,7 +118,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_centerVertical="true"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_small"
                         android:textColor="@color/gray"
                         android:text="预算余额￥-1,115.60"
                         />
@@ -168,13 +169,13 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/select_btn_gray"
-                        android:text="@string/bill_life"
+                        android:text="@string/btn_bill_life"
                         android:textColor="@color/white"
-                        android:textSize="17sp"
+                        android:textSize="@dimen/font_normal"
                         />
 
                     <Button
-                        android:id="@+id/home_btn_review"
+                        android:id="@+id/home_btn_statistic"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -184,8 +185,8 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/select_btn_gray"
-                        android:text="@string/bill_review"
-                        android:textSize="17sp"
+                        android:text="@string/btn_bill_statistic"
+                        android:textSize="@dimen/font_normal"
                         android:textColor="@color/white"
                         />
                 </LinearLayout>
@@ -215,7 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/home_ic_add_bill"
-            android:text="@string/bill_add"
+            android:text="@string/btn_add_bill"
             android:textColor="@color/selector_add_bill_text"/>
     </RelativeLayout>
 </LinearLayout>

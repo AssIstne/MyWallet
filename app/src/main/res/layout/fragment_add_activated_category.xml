@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:background="@android:color/white"
+        android:clickable="true"
         >
 
         <RelativeLayout
@@ -30,12 +31,13 @@
                 />
 
             <TextView
+                android:id="@+id/add_act_cat_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_centerInParent="true"
                 android:textSize="22sp"
-                android:text="@string/category_type"
+                android:text="@string/title_category_type_out"
                 />
         </RelativeLayout>
 
@@ -72,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:hint="@string/category_search_hint"
+                    android:hint="@string/hint_category_search_or_add"
                     android:maxLength="4"
                     android:background="@android:color/transparent"
                     />

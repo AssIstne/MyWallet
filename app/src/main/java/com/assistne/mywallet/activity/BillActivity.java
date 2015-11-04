@@ -1,14 +1,19 @@
 package com.assistne.mywallet.activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,11 +26,15 @@ import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.fragment.AddActivatedCategoryFragment;
 import com.assistne.mywallet.fragment.GlobalNavigationFragment;
 import com.assistne.mywallet.fragment.KeyBoardFragment;
+import com.assistne.mywallet.fragment.SelectPhotoFragment;
 import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
+import com.assistne.mywallet.notification.NotificationUtils;
 import com.assistne.mywallet.util.GlobalUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by assistne on 15/9/13.
@@ -57,12 +66,15 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     private Button btnEmotionGood;
     private Button btnEmotionNormal;
     private Button btnEmotionBad;
+    private Button btnCamera;
     private LinearLayout spanPointers;
+    private ImageView imgCameraDel;
+    private ImageView imgCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_layout);
+        setContentView(R.layout.activity_bill);
         findViews();
         initNavigation();
 
@@ -96,8 +108,8 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         setActivatedEmotion(findViewById(emotionViewId));
 
         btnPrice.setText(GlobalUtils.formatPrice(currentBill.getPrice(), false));
-        btnDate.setText(GlobalUtils.getFormatDateFromMills(currentBill.getDateForMills()));
-        btnDate.setTag(currentBill.getDateForMills());
+        btnDate.setText(GlobalUtils.getFormatDateFromMills(currentBill.getDateInMills()));
+        btnDate.setTag(currentBill.getDateInMills());
         etDescription.setText(currentBill.getDescription());
         tvLocation.setText(currentBill.getLocation());
 
@@ -127,6 +139,15 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             }
         });
         initCategorySpan();
+        Log.d(LOG_TAG, "current bill's path " + currentBill.getImagePath());
+        if (!currentBill.getImagePath().equals("")) {
+            btnCamera.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showPhotoImage(currentBill.getImagePath());
+                }
+            }, 10);
+        }
     }
 
 //    获取view，绑定事件
@@ -157,6 +178,9 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         btnPrice = (Button)findViewById(R.id.bill_btn_price);
         btnPrice.setOnClickListener(this);
 
+        btnCamera = (Button)findViewById(R.id.bill_btn_camera);
+        btnCamera.setOnClickListener(this);
+
         viewPager = (ViewPager)findViewById(R.id.bill_pager_category);
 
         spanMain = (ScrollView)findViewById(R.id.bill_span_main);
@@ -167,6 +191,11 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
         findViewById(R.id.bill_span_ensure).setOnClickListener(this);
 
+        imgCameraDel = (ImageView)findViewById(R.id.bill_img_camera_delete);
+        imgCameraDel.setOnClickListener(this);
+
+        imgCamera = (ImageView)findViewById(R.id.bill_img_camera);
+        imgCamera.setOnClickListener(this);
     }
 
 //    初始化标题栏
@@ -220,11 +249,37 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
             case R.id.bill_span_ensure:
                 saveBill();
                 setResult(Activity.RESULT_OK);
+                NotificationUtils.showNotification(this);
                 finish();
+                break;
+            case R.id.bill_btn_camera:
+                showPhotoSelection();
+                break;
+            case R.id.bill_img_camera:
+                showPhotoSelection();
+                break;
+            case R.id.bill_img_camera_delete:
+                imgCameraDel.setVisibility(View.GONE);
+                imgCamera.setVisibility(View.GONE);
+                btnCamera.setVisibility(View.VISIBLE);
+                imgCamera.setTag(null);
+                break;
+            case R.id.bill_btn_date:
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), "datePicker");
                 break;
             default:
                 break;
         }
+    }
+
+    private void showPhotoSelection() {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.animator.slide_up, R.animator.slide_down,
+                R.animator.slide_up, R.animator.slide_down);
+        transaction.add(R.id.bill_span_root, new SelectPhotoFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
@@ -237,7 +292,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void updateTitleAndPrice() {
-        btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
+        btnTitleKey.setText(isIncome ? R.string.global_income : R.string.global_spend);
         btnPrice.setTextColor(isIncome ?
                 getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
     }
@@ -245,12 +300,8 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     public void showKeyboard() {
         if (!isShowingKeyboard) {
-            KeyBoardFragment keyBoardFragment = new KeyBoardFragment();
-            keyBoardFragment.setCallBack(keyboardCallBack);
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(KeyBoardFragment.IS_INCOME, isIncome);
-            bundle.putString(KeyBoardFragment.PRICE, btnPrice.getText().toString());
-            keyBoardFragment.setArguments(bundle);
+            KeyBoardFragment keyBoardFragment = KeyBoardFragment.newInstance(
+                    true, isIncome, btnPrice.getText().toString(), keyboardCallBack);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.bill_span_root, keyBoardFragment);
             transaction.addToBackStack(null);
@@ -316,7 +367,7 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
 
     public void updateTextCategory() {
         if (tvCategory != null && activatedBillCategory != null && activatedBillCategory.getTag() != null) {
-            tvCategory.setText(((BillCategory)activatedBillCategory.getTag()).getName());
+            tvCategory.setText(((BillCategory) activatedBillCategory.getTag()).getName());
         }
     }
 
@@ -332,7 +383,13 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
         currentBill.setCategoryId(categoryId);
         currentBill.setDescription(description);
         currentBill.setLocation(location);
-        currentBill.setDateForMills(date);
+        currentBill.setDateInMills(date);
+        currentBill.setIsIncome(isIncome);
+        if (imgCamera.getVisibility() == View.VISIBLE && imgCamera.getTag() != null) {
+            currentBill.setImagePath((String)imgCamera.getTag());
+        } else {
+            currentBill.setImagePath("");
+        }
         if (currentBill.getId() == 0) {
             MyWalletDatabaseUtils.getInstance(this).saveBill(currentBill);
         } else {
@@ -367,14 +424,59 @@ public class BillActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void showCategoryType() {
-        AddActivatedCategoryFragment categoryFragment = new AddActivatedCategoryFragment();
+        AddActivatedCategoryFragment categoryFragment = AddActivatedCategoryFragment.newInstance(isIncome);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.bill_span_root, categoryFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public void removeCategoryFragment() {
-        fragmentManager.popBackStack();
+    public void removeFragment() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    }
+
+    public void showPhotoImage(String path) {
+        View spanCamera = findViewById(R.id.bill_span_camera);
+        Log.d(LOG_TAG, spanCamera.getHeight() + ":"+spanCamera.getWidth());
+        imgCamera.setImageBitmap(
+                GlobalUtils.decodeSampledBitmapFromPath(path, spanCamera.getWidth(), spanCamera.getHeight()));
+        imgCamera.setTag(path);
+        imgCamera.setVisibility(View.VISIBLE);
+        imgCameraDel.setVisibility(View.VISIBLE);
+        btnCamera.setVisibility(View.GONE);
+    }
+
+    protected long getBtnDateTag() {
+        return (long)btnDate.getTag();
+    }
+
+    protected void setBtnDateTag(long dateInMills) {
+        btnDate.setTag(dateInMills);
+        btnDate.setText(GlobalUtils.getFormatDateFromMills(dateInMills));
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance(Locale.CHINA);
+            c.setTimeInMillis(((BillActivity)getActivity()).getBtnDateTag());
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            final Calendar c = Calendar.getInstance(Locale.CHINA);
+            c.set(year, month, day);
+            ((BillActivity)getActivity()).setBtnDateTag(c.getTimeInMillis());
+        }
     }
 }

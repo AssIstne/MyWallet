@@ -5,35 +5,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.assistne.mywallet.R;
+import com.assistne.mywallet.db.DbReaderContract.BillTable;
+import com.assistne.mywallet.db.DbReaderContract.CategoryTable;
+
 
 /**
  * Created by assistne on 15/9/21.
  */
 public class MyWalletDatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
+    private static String CREATE_BILL = "create table " +
+            BillTable.TABLE_NAME + " (" +
+            BillTable._ID + " integer primary key autoincrement, " +
+            BillTable.CN_CATEGORY_ID + " integer not null, " +
+            BillTable.CN_PRICE + " real default 0, " +
+            BillTable.CN_EMOTION + " integer default 0, " +
+            BillTable.CN_DESCRIPTION + " text, " +
+            BillTable.CN_LOCATION + " text, " +
+            BillTable.CN_DATE_IN_MILLS + " integer not null, " +
+            BillTable.CN_IMAGE_PATH + " text, " +
+            BillTable.CN_IS_INCOME + " integer default 0)";
 
-    private static String CREATE_BILL = "create table Bill (" +
-            "id integer primary key autoincrement, " +
-            "category_id integer not null, " +
-            "price real default 0, " +
-            "emotion integer default 0, " +
-            "description text, " +
-            "location text, " +
-            "date integer not null)";
-
-    private static String CREATE_CATEGORY = "create table Category (" +
-            "id integer primary key autoincrement, " +
-            "name text not null, " +
-            "parent_id integer default 0, " +
-            "type integer not null, " +
-            "background_res_id integer default 0, " +
-            "count integer default 0," +
-            "activated integer default 1)";
+    private static String CREATE_CATEGORY = "create table " +
+            CategoryTable.TABLE_NAME + " (" +
+            CategoryTable._ID + " integer primary key autoincrement, " +
+            CategoryTable.CN_NAME + " text not null, " +
+            CategoryTable.CN_PARENT_ID + " integer default 0, " +
+            CategoryTable.CN_TYPE + " integer not null, " +
+            CategoryTable.CN_BACKGROUND_RES_ID + " integer default 0, " +
+            CategoryTable.CN_COUNT + " integer default 0, " +
+            CategoryTable.CN_ACTIVATED + " integer default 0, " +
+            CategoryTable.CN_DELETED + " integer default 0)";
 
     public MyWalletDatabaseHelper(Context mContext, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(mContext, name, factory, version);
-        context = mContext;
     }
 
     @Override
@@ -49,46 +54,54 @@ public class MyWalletDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void initBillCategoryData(SQLiteDatabase db) {
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        final String comSep = ", ";
+        final String insertSQL = "insert into " +
+                CategoryTable.TABLE_NAME + " (" +
+                CategoryTable.CN_NAME + comSep + CategoryTable.CN_PARENT_ID + comSep +
+                CategoryTable.CN_TYPE + comSep + CategoryTable.CN_BACKGROUND_RES_ID + comSep +
+                CategoryTable.CN_ACTIVATED + ") values(?, ?, ?, ?, ?)";
+        db.execSQL(insertSQL,
                 new String[] {"餐饮", "0", "-1", String.valueOf(R.drawable.selector_round_btn_green), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"交通", "0", "-1", String.valueOf(R.drawable.selector_round_btn_blue), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"购物", "0", "-1", String.valueOf(R.drawable.selector_round_btn_orange), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"娱乐", "0", "-1", String.valueOf(R.drawable.selector_round_btn_red), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"居家", "0", "-1", String.valueOf(R.drawable.selector_round_btn_brown), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"社交人情", "0", "-1", String.valueOf(R.drawable.selector_round_btn_pink), "0"});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id, activated) values(?, ?, ?, ?, ?)",
+        db.execSQL(insertSQL,
                 new String[] {"医教", "0", "-1", String.valueOf(R.drawable.selector_round_btn_light_blue), "0"});
 
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"工资", "0", "1", String.valueOf(R.drawable.selector_round_btn_green)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"奖金", "0", "1", String.valueOf(R.drawable.selector_round_btn_green)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"补贴", "0", "1", String.valueOf(R.drawable.selector_round_btn_green)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"兼职", "0", "1", String.valueOf(R.drawable.selector_round_btn_green)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"分红", "0", "1", String.valueOf(R.drawable.selector_round_btn_green)});
+        db.execSQL(insertSQL,
+                new String[] {"收入", "0", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"工资", "8", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"奖金", "8", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"补贴", "8", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"兼职", "8", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"分红", "8", "1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
 
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"餐饮", "1", "-1", String.valueOf(R.drawable.selector_round_btn_green)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"交通", "2", "-1", String.valueOf(R.drawable.selector_round_btn_blue)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"购物", "3", "-1", String.valueOf(R.drawable.selector_round_btn_orange)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"娱乐", "4", "-1", String.valueOf(R.drawable.selector_round_btn_red)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"居家", "5", "-1", String.valueOf(R.drawable.selector_round_btn_brown)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"社交", "6", "-1", String.valueOf(R.drawable.selector_round_btn_pink)});
-        db.execSQL("insert into Category (name, parent_id, type, background_res_id) values(?, ?, ?, ?)",
-                new String[] {"医疗", "7", "-1", String.valueOf(R.drawable.selector_round_btn_light_blue)});
+        db.execSQL(insertSQL,
+                new String[] {"餐饮", "1", "-1", String.valueOf(R.drawable.selector_round_btn_green), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"交通", "2", "-1", String.valueOf(R.drawable.selector_round_btn_blue), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"购物", "3", "-1", String.valueOf(R.drawable.selector_round_btn_orange), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"娱乐", "4", "-1", String.valueOf(R.drawable.selector_round_btn_red), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"居家", "5", "-1", String.valueOf(R.drawable.selector_round_btn_brown), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"社交", "6", "-1", String.valueOf(R.drawable.selector_round_btn_pink), "1"});
+        db.execSQL(insertSQL,
+                new String[] {"医疗", "7", "-1", String.valueOf(R.drawable.selector_round_btn_light_blue), "1"});
 
     }
 }

@@ -27,7 +27,7 @@ public class GlobalNavigationFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_global_navigation_layout, null);
+        view = inflater.inflate(R.layout.fragment_global_navigation, null);
         btnBack = (Button)view.findViewById(R.id.global_navigation_btn_back);
         btnBack.setOnClickListener(this);
         btnBillTitle = (Button)view.findViewById(R.id.global_navigation_btn_title);

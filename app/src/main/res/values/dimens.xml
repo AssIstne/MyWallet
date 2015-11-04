@@ -3,4 +3,22 @@
     <dimen name="button_margin">5dp</dimen>
 
     <dimen name="emotion_size">35dp</dimen>
+
+    <!-- view height-->
+    <dimen name="height_nav">50dp</dimen>
+
+    <!-- margin -->
+    <dimen name="margin_edge">16dp</dimen>
+
+    <!-- font size-->
+    <dimen name="font_super_huge">30sp</dimen>
+    <dimen name="font_huge">24sp</dimen>
+    <dimen name="font_large">22sp</dimen>
+    <dimen name="font_big">20sp</dimen>
+    <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_tiny">12sp</dimen>
+
+    <dimen name="offset_neg_15">-15dp</dimen>
+    <dimen name="offset_15">15dp</dimen>
 </resources>

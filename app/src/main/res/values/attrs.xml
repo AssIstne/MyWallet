@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SimpleBillPriceLayout">
+    <declare-styleable name="PriceView">
         <attr name="price_text" format="string"/>
         <attr name="money_symbol" format="string"/>
+        <attr name="price_color" format="color"/>
+        <attr name="pre_size" format="dimension"/>
+        <attr name="post_size" format="dimension"/>
     </declare-styleable>
 </resources>

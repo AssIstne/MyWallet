@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/bill_bg"
+            android:paddingLeft="@dimen/margin_edge"
+            android:paddingStart="@dimen/margin_edge"
+            android:paddingRight="@dimen/margin_edge"
+            android:paddingEnd="@dimen/margin_edge"
+            >
+
+            <ImageView
+                android:id="@+id/statistic_img_day_delta_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                />
+            <TextView
+                android:id="@+id/statistic_text_day_delta_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/statistic_img_day_delta_average"
+                android:layout_toEndOf="@id/statistic_img_day_delta_average"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/statistic_text_day_delta_average"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/gray_for_text"
+                android:text="比日均"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/bill_bg"
+            android:paddingLeft="@dimen/margin_edge"
+            android:paddingStart="@dimen/margin_edge"
+            android:paddingRight="@dimen/margin_edge"
+            android:paddingEnd="@dimen/margin_edge"
+            >
+            <ImageView
+                android:id="@+id/statistic_img_day_delta_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                />
+            <TextView
+                android:id="@+id/statistic_text_day_delta_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/statistic_img_day_delta_before"
+                android:layout_toEndOf="@id/statistic_img_day_delta_before"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/statistic_text_day_delta_before"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/gray_for_text"
+                android:text="比上日"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_edge"
+        android:paddingRight="@dimen/margin_edge"
+        android:background="@drawable/bill_bg"
+        >
+
+        <TextView
+            android:id="@+id/statistic_text_day_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/font_large"
+            tools:text="当日共消费5笔"
+            />
+
+        <TextView
+            android:id="@+id/statistic_text_day_emotion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statistic_text_day_total"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/gray_for_text"
+            tools:text="开心，一般，不爽"
+            />
+
+        <ImageView
+            android:id="@+id/statistic_img_day_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/review_add"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/statistic_span_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="90dp"
+        />
+</LinearLayout>

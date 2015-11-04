@@ -3,6 +3,8 @@ package com.assistne.mywallet.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.assistne.mywallet.R;
+
 /**
  * Created by assistne on 15/9/18.
  */
@@ -28,6 +30,7 @@ public class BillCategory implements Parcelable{
     public BillCategory() {
         count = 0;
         activated = 1;
+        backgroundResId = R.drawable.selector_round_btn_green;
     }
 
     protected BillCategory(Parcel in) {

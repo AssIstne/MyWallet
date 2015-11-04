@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.assistne.mywallet.R;
-import com.assistne.mywallet.customview.SimpleBillPriceLayout;
+import com.assistne.mywallet.customview.PriceView;
 import com.assistne.mywallet.db.MyWalletDatabaseUtils;
 import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.model.BillCategory;
@@ -57,7 +57,7 @@ public class BillsAdapter extends BaseAdapter {
             holder.emotion = (ImageView)convertView.findViewById(R.id.bill_simple_img_emotion);
             holder.category = (TextView)convertView.findViewById(R.id.bill_simple_text_category);
             holder.time_location = (TextView)convertView.findViewById(R.id.bill_simple_text_info);
-            holder.price = (SimpleBillPriceLayout)convertView.findViewById(R.id.bill_simple_span_price);
+            holder.price = (PriceView)convertView.findViewById(R.id.bill_simple_span_price);
             convertView.setTag(holder);
 
         }else {
@@ -65,10 +65,10 @@ public class BillsAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
         Bill bill = dataList.get(position);
-        BillCategory category = MyWalletDatabaseUtils.getInstance(context).getBillCategory(bill.getCategoryId());
+        BillCategory category = MyWalletDatabaseUtils.getInstance(context).getCategory(bill.getCategoryId());
         holder.emotion.setBackgroundResource(bill.getEmotionRes());
         holder.category.setText(category.getName());
-        holder.time_location.setText(DateFormat.format("MM.dd hh:mm", bill.getDateForMills()) + "  " + bill.getLocation());
+        holder.time_location.setText(DateFormat.format("MM.dd hh:mm", bill.getDateInMills()) + "  " + bill.getLocation());
         holder.price.setPriceText(bill.getPrice());
         holder.price.setIsIncome(category.getType() > 0);
         return convertView;
@@ -78,7 +78,7 @@ public class BillsAdapter extends BaseAdapter {
         ImageView emotion;
         TextView category;
         TextView time_location;
-        SimpleBillPriceLayout price;
+        PriceView price;
     }
 
     public void setDataList(ArrayList<Bill> mDataList) {

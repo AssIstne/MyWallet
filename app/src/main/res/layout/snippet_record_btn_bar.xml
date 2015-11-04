@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/record_fragment_navigation"
+    >
+
+    <Button
+        android:id="@+id/record_btn_life"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/select_record_btn_bar"
+        android:text="@string/btn_bill_life"/>
+
+    <Button
+        android:id="@+id/record_btn_statistic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/select_record_btn_bar"
+        android:text="@string/btn_bill_statistic"/>
+</LinearLayout>

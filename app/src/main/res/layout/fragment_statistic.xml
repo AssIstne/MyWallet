@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:chart="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/offset_15"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/statistic_span_title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="@dimen/margin_edge"
+                android:paddingStart="@dimen/margin_edge"
+                android:paddingRight="@dimen/margin_edge"
+                android:paddingEnd="@dimen/margin_edge"
+                android:background="@drawable/bill_bg"
+                >
+
+                <ImageView
+                    android:id="@+id/statistic_img_left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_round_left"
+                    />
+
+                <TextView
+                    android:id="@+id/statistic_text_graph_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/font_normal"
+                    tools:text="本月"
+                    />
+
+                <ImageView
+                    android:id="@+id/statistic_img_right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/arrow_round_right"
+                    />
+            </RelativeLayout>
+
+            <com.db.chart.view.BarChartView
+                android:id="@+id/statistic_span_chart"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_below="@id/statistic_span_title"
+                android:layout_marginTop="5dp"
+                chart:chart_axisThickness="1dp"
+                chart:chart_axisColor="@color/grey_400"
+                chart:chart_axisTopSpacing="20dp"
+                chart:chart_barSpacing="20dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/statistic_span_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/statistic_span_chart"
+                android:background="@drawable/bill_bg"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/global_spend"
+                        android:textSize="@dimen/font_normal"
+                        />
+                    <TextView
+                        android:id="@+id/statistic_text_spend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/red"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/statistic_span_income"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/global_income"
+                        android:textSize="@dimen/font_normal"
+                        />
+                    <TextView
+                        android:id="@+id/statistic_text_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/green"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/snippet_statistic_month_field"
+                android:id="@+id/statistic_span_month_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/statistic_span_info"/>
+
+            <include layout="@layout/snippet_statistic_day_field"
+                android:id="@+id/statistic_span_day_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/statistic_span_info"/>
+
+        </RelativeLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        >
+        <Button
+            android:id="@+id/statistic_btn_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_statistic_btn_day"
+            android:background="@drawable/selector_add_bill_btn_bg"
+            android:paddingTop="5dp"
+            android:text="@string/btn_review_day"
+            android:textColor="@color/selector_statistic_btn_text_color"
+            android:textSize="@dimen/font_small"
+            />
+
+        <!--<Button-->
+            <!--android:id="@+id/statistic_btn_week"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableTop="@drawable/selector_statistic_btn_week"-->
+            <!--android:background="@drawable/selector_add_bill_btn_bg"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:text="@string/btn_review_week"-->
+            <!--android:textColor="@color/selector_statistic_btn_text_color"-->
+            <!--android:textSize="@dimen/font_small"-->
+            <!--/>-->
+
+        <Button
+            android:id="@+id/statistic_btn_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_statistic_btn_month"
+            android:background="@drawable/selector_add_bill_btn_bg"
+            android:paddingTop="5dp"
+            android:text="@string/btn_review_month"
+            android:textColor="@color/selector_statistic_btn_text_color"
+            android:textSize="@dimen/font_small"
+            />
+    </LinearLayout>
+</RelativeLayout>

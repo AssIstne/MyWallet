@@ -26,12 +26,14 @@ public class Bill implements Parcelable{
     private int categoryId = BillCategory.NO_CATEGORY;
     private String description = "";
     private float price = (float)0.00;
-    private long dateForMills;
+    private long dateInMills;
     private int id;
+    private String imagePath = "";
+    private boolean isIncome = false;
 
 
     public Bill() {
-        dateForMills = Calendar.getInstance(Locale.CHINA).getTimeInMillis();
+        dateInMills = Calendar.getInstance(Locale.CHINA).getTimeInMillis();
     }
 
     private Bill(Parcel in) {
@@ -41,7 +43,9 @@ public class Bill implements Parcelable{
         categoryId = in.readInt();
         description = in.readString();
         price = in.readFloat();
-        dateForMills = in.readLong();
+        dateInMills = in.readLong();
+        imagePath = in.readString();
+        isIncome = in.readByte() == 1;
     }
 
     public int getId() {
@@ -89,12 +93,12 @@ public class Bill implements Parcelable{
         this.price = price;
     }
 
-    public long getDateForMills() {
-        return dateForMills;
+    public long getDateInMills() {
+        return dateInMills;
     }
 
-    public void setDateForMills(long dateForMills) {
-        this.dateForMills = dateForMills;
+    public void setDateInMills(long dateInMills) {
+        this.dateInMills = dateInMills;
     }
 
     public String getDescription() {
@@ -119,7 +123,9 @@ public class Bill implements Parcelable{
         dest.writeInt(categoryId);
         dest.writeString(description);
         dest.writeFloat(price);
-        dest.writeLong(dateForMills);
+        dest.writeLong(dateInMills);
+        dest.writeString(imagePath);
+        dest.writeByte((byte)(isIncome ? 1 : 0));
     }
 
     public static final Parcelable.Creator<Bill> CREATOR = new Parcelable.Creator<Bill>() {
@@ -134,10 +140,26 @@ public class Bill implements Parcelable{
 
     public String getInfo() {
         SimpleDateFormat format = new SimpleDateFormat("MM.dd kk:mm", Locale.CHINA);
-        return format.format(GlobalUtils.getDateFromMills(dateForMills)) + " " + location;
+        return format.format(GlobalUtils.getDateFromMills(dateInMills)) + " " + location;
     }
 
     public BillCategory getBillCategory(Context context) {
-        return MyWalletDatabaseUtils.getInstance(context).getBillCategory(categoryId);
+        return MyWalletDatabaseUtils.getInstance(context).getCategory(categoryId);
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public boolean isIncome() {
+        return isIncome;
+    }
+
+    public void setIsIncome(boolean isIncome) {
+        this.isIncome = isIncome;
     }
 }

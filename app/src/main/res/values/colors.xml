@@ -16,4 +16,27 @@
     <color name="half_transparent_gray">#8c323232</color>
 
     <color name="light_blue">#4bc8c8</color>
+
+    <color name="transparent_gray">#49c3c3c3</color>
+
+    <color name="category_brown">#e2af96</color>
+    <color name="category_blue">#00afe1</color>
+    <color name="category_green">#67a926</color>
+    <color name="category_light_blue">#4bc8c8</color>
+    <color name="category_light_green">#64c896</color>
+    <color name="category_orange">#ff9b00</color>
+    <color name="category_pink">#fa647d</color>
+    <color name="category_red">#ff7d64</color>
+
+    <!-- material design color -->
+    <color name="red_400">#EF5350</color>
+    <color name="red_200">#FFAB91</color>
+    <color name="green_400">#66BB6A</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="grey_400">#BDBDBD</color>
+
+    <color name="review_blue">#3aabf3</color>
+
+    <color name="notification_green">#00af4b</color>
+    <color name="notification_grey">#c9c9c9</color>
 </resources>

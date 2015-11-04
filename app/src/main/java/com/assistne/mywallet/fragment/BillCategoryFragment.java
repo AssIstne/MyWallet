@@ -1,6 +1,10 @@
 package com.assistne.mywallet.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -49,7 +54,7 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activity = (BillActivity)getActivity();
-        View root = inflater.inflate(R.layout.fragment_bill_category_layout, container, false);
+        View root = inflater.inflate(R.layout.fragment_bill_category, container, false);
         Bundle bundle = getArguments();
         data = bundle.getParcelableArrayList(DATA);
         position = bundle.getInt(POSITION);
@@ -71,20 +76,21 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                RemoveCategoryDialogFragment dialogFragment = new RemoveCategoryDialogFragment();
+                final BillCategory category = (BillCategory) view.getTag();
+                final MyWalletDatabaseUtils db = MyWalletDatabaseUtils.getInstance(activity);
+                RemoveCategoryDialogFragment dialogFragment = RemoveCategoryDialogFragment.newInstance(category.getType());
                 RemoveCategoryDialogFragment.Callback callback = new RemoveCategoryDialogFragment.Callback() {
                     @Override
                     public void remove() {
-                        BillCategory category = (BillCategory) view.getTag();
                         category.setActivated(0);
-                        MyWalletDatabaseUtils.getInstance(activity).updateCategory(category);
+                        db.updateCategory(category);
                         activity.setActivatedBillCategory(null);
                         activity.initCategorySpan();
                     }
 
                     @Override
                     public void edit() {
-
+                        EditCategoryDialog.newInstance(category).show(activity.getFragmentManager(), null);
                     }
                 };
                 dialogFragment.setCallback(callback);
@@ -162,4 +168,53 @@ public class BillCategoryFragment extends android.support.v4.app.Fragment {
     public int getPosition() {
         return position;
     }
+
+    public static class EditCategoryDialog extends DialogFragment {
+
+        public static final String CATEGORY = "cat";
+        private BillCategory mCategory;
+
+        public static EditCategoryDialog newInstance(BillCategory category) {
+            if (category == null) {
+                return null;
+            }
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(CATEGORY, category);
+            EditCategoryDialog dialog = new EditCategoryDialog();
+            dialog.setArguments(bundle);
+            return dialog;
+        }
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                mCategory = bundle.getParcelable(CATEGORY);
+            }
+            final EditText editText = new EditText(getActivity());
+            editText.setText(mCategory.getName());
+            builder.setTitle(R.string.dialog_item_modify_category)
+                    .setView(editText)
+                    .setPositiveButton(R.string.global_ensure, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (!editText.getText().toString().equals(mCategory.getName())) {
+                                mCategory.setName(editText.getText().toString());
+                                MyWalletDatabaseUtils.getInstance(getActivity()).updateCategory(mCategory);
+                                BillActivity activity = ((BillActivity) getActivity());
+                                activity.setActivatedBillCategory(null);
+                                activity.initCategorySpan();
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.global_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            return builder.create();
+        }
+    }
+
 }

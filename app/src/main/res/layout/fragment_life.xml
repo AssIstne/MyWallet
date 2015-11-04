@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:self="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/life_img_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                tools:src="@drawable/main_header_bg"
+                />
+
+            <ImageView
+                android:id="@+id/life_img_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/budget_camera"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/budget_info_bg"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/life_text_label_used"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:layout_marginStart="@dimen/margin_edge"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@android:color/white"
+                    android:text="@string/label_used"
+                    />
+
+                <com.assistne.mywallet.customview.PriceView
+                    android:id="@+id/life_span_price_used"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/life_text_label_used"
+                    android:layout_toEndOf="@id/life_text_label_used"
+                    self:price_color="@android:color/white"
+                    self:pre_size="@dimen/font_normal"
+                    self:post_size="@dimen/font_tiny"
+                    />
+
+                <com.assistne.mywallet.customview.PriceView
+                    android:id="@+id/life_span_price_unused"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/margin_edge"
+                    android:layout_marginEnd="@dimen/margin_edge"
+                    self:price_color="@android:color/white"
+                    self:pre_size="@dimen/font_normal"
+                    self:post_size="@dimen/font_tiny"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/life_span_price_unused"
+                    android:layout_toStartOf="@id/life_span_price_unused"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@android:color/white"
+                    android:text="@string/label_unused"
+                    />
+
+            </RelativeLayout>
+
+            <com.assistne.mywallet.customview.BudgetProgressBar
+                android:id="@+id/life_span_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_alignParentBottom="true"
+                />
+
+            <RelativeLayout
+                android:id="@+id/life_span_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="7dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/budget_progress_day"
+                    />
+                <TextView
+                    android:id="@+id/life_text_date_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/font_tiny"
+                    android:textColor="@android:color/white"
+                    tools:text="10月"
+                    />
+                <TextView
+                    android:id="@+id/life_text_date_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/life_text_date_month"
+                    android:textSize="@dimen/font_tiny"
+                    android:textColor="@android:color/white"
+                    tools:text="14"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        >
+        <Button
+            android:id="@+id/life_btn_fast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_add"
+            android:background="@drawable/selector_add_bill_btn_bg"
+            android:paddingTop="5dp"
+            android:text="@string/btn_add_bill_fast"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_small"
+            />
+
+        <Button
+            android:id="@+id/life_btn_camera"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_camera"
+            android:background="@drawable/selector_add_bill_btn_bg"
+            android:paddingTop="5dp"
+            android:text="@string/btn_add_bill_camera"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_small"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

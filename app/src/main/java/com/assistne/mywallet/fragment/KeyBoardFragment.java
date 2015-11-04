@@ -1,6 +1,7 @@
 package com.assistne.mywallet.fragment;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +23,14 @@ public class KeyBoardFragment extends Fragment implements View.OnClickListener, 
 
     public static final String IS_INCOME = "isIncome";
     public static final String PRICE = "price";
+    public static final String SHOW_TYPE = "type";
 
     private int pricePrefix = 0;
     private int priceSuffix = 0;
 
     private boolean isEditingPrefix = true;
     private boolean isIncome = false;
+    private boolean hasType = true;
 
     private TextView tvPrice;
     private Button btnTitleKey;
@@ -36,10 +39,21 @@ public class KeyBoardFragment extends Fragment implements View.OnClickListener, 
 
     private String LOG_TAG = "test fragment keyboard";
 
+    public static KeyBoardFragment newInstance(boolean hasType, boolean isIncome, String price, KeyboardCallBack callBack) {
+        KeyBoardFragment keyBoardFragment = new KeyBoardFragment();
+        keyBoardFragment.setCallBack(callBack);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(KeyBoardFragment.IS_INCOME, isIncome);
+        bundle.putString(KeyBoardFragment.PRICE, price);
+        bundle.putBoolean(KeyBoardFragment.SHOW_TYPE, hasType);
+        keyBoardFragment.setArguments(bundle);
+        return keyBoardFragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_keyboard_layout, container, false);
+        View layout = inflater.inflate(R.layout.fragment_keyboard, container, false);
+        initParams();
 
         layout.setClickable(true);
         layout.findViewById(R.id.keyboard_span_root).setOnClickListener(this);
@@ -47,20 +61,25 @@ public class KeyBoardFragment extends Fragment implements View.OnClickListener, 
         layout.findViewById(R.id.keyboard_span_main).setOnClickListener(this);
 
         btnTitleKey = (Button)layout.findViewById(R.id.keyboard_btn_title_key);
-        btnTitleKey.setOnClickListener(this);
-
+        if (hasType) {
+            btnTitleKey.setOnClickListener(this);
+        } else {
+            btnTitleKey.setVisibility(View.INVISIBLE);
+        }
         tvPrice = (TextView)layout.findViewById(R.id.keyboard_text_price);
         GridView gridView = (GridView)layout.findViewById(R.id.keyboard_grid_numbers);
         gridView.setAdapter(new KeyBoardAdapter(getActivity()));
         gridView.setOnItemClickListener(this);
 
-        initParams();
         refreshPrice();
         return layout;
     }
 
     private void initParams() {
         Bundle bundle = getArguments();
+        if (bundle == null) {
+            return;
+        }
         isIncome = bundle.getBoolean(IS_INCOME, false);
         String price = bundle.getString(PRICE, "0.0");
         float fPrice = Float.valueOf(price);
@@ -69,6 +88,7 @@ public class KeyBoardFragment extends Fragment implements View.OnClickListener, 
         priceSuffix = temp % 10 == 0 ? temp / 10 : temp;
         Log.d(LOG_TAG, pricePrefix + ":" + priceSuffix);
         isEditingPrefix = priceSuffix == 0;
+        hasType = bundle.getBoolean(SHOW_TYPE, true);
     }
 
 
@@ -138,11 +158,16 @@ public class KeyBoardFragment extends Fragment implements View.OnClickListener, 
         String price = pricePrefix + "." + priceSuffix;
         price = GlobalUtils.formatPrice(Float.valueOf(price), false);
         tvPrice.setText(price);
-        btnTitleKey.setText(isIncome ? R.string.bill_income : R.string.bill_spend);
-        btnTitleKey.setTextColor(isIncome ?
-                getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
-        tvPrice.setTextColor(isIncome ?
-                getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+        if (hasType) {
+            btnTitleKey.setText(isIncome ? R.string.global_income : R.string.global_spend);
+            btnTitleKey.setTextColor(isIncome ?
+                    getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+            tvPrice.setTextColor(isIncome ?
+                    getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+        } else {
+            tvPrice.setTextColor(Color.BLACK);
+        }
+
         if (mCallBack != null) {
             mCallBack.setPrice(price);
         }

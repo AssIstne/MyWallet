@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:name="com.assistne.mywallet.fragment.GlobalNavigationFragment"
-        tools:layout="@layout/fragment_global_navigation_layout" />
+        tools:layout="@layout/fragment_global_navigation" />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_alignBaseline="@id/bill_text_category"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/font_super_huge"
                     android:textColor="@color/red"
                     android:background="@android:color/transparent"
                     tools:text="0.00"
@@ -117,7 +117,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_normal"
                     android:text="一般"
                     />
 
@@ -140,7 +140,7 @@
                     android:layout_marginRight="60dp"
                     android:layout_marginEnd="60dp"
                     android:gravity="center"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_normal"
                     android:text="满意"
                     />
 
@@ -164,30 +164,59 @@
                     android:layout_marginLeft="60dp"
                     android:layout_marginStart="60dp"
                     android:gravity="center"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_normal"
                     android:text="不爽"
 
                     />
 
-                <Button
-                    android:id="@+id/bill_btn_camera"
+                <RelativeLayout
+                    android:id="@+id/bill_span_camera"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:background="@drawable/selector_bill_camera"
                     android:layout_below="@id/bill_text_emotion_normal"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="10dp">
+
+                    <Button
+                        android:id="@+id/bill_btn_camera"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_bill_camera"
+                        android:layout_centerInParent="true"
+                        />
+                    <ImageView
+                        android:id="@+id/bill_img_camera"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        />
+                    <ImageView
+                        android:id="@+id/bill_img_camera_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/bill_image_delete"
+                        android:visibility="gone"
+                        />
+                </RelativeLayout>
+
 
                 <EditText
                     android:id="@+id/bill_edit_description"
                     android:layout_width="230dp"
                     android:layout_height="120dp"
                     android:layout_below="@id/bill_text_emotion_normal"
-                    android:layout_toRightOf="@id/bill_btn_camera"
-                    android:layout_toEndOf="@id/bill_btn_camera"
+                    android:layout_toRightOf="@id/bill_span_camera"
+                    android:layout_toEndOf="@id/bill_span_camera"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
@@ -202,7 +231,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_below="@+id/bill_edit_description"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     >
 
                     <Button
@@ -214,7 +243,7 @@
                         android:layout_gravity="center_vertical"
                         android:background="@android:color/transparent"
                         android:textColor="@color/gray_for_text"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_normal"
                         />
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -243,7 +272,7 @@
                                 android:layout_toEndOf="@id/bill_img_location"
                                 android:layout_centerVertical="true"
                                 android:textColor="@color/gray_for_text"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/font_normal"
                                 />
                         </RelativeLayout>
                     </RelativeLayout>
@@ -290,7 +319,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/white"
-                        android:text="@string/bill_save_and_share"/>
+                        android:text="@string/btn_save_and_share"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -315,7 +344,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/white"
-                        android:text="@string/bill_save"/>
+                        android:text="@string/global_save"/>
                 </RelativeLayout>
 
             </LinearLayout>

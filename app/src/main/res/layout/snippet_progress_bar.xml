@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/progress_img_use"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:background="@drawable/budget_progress_use"/>
+    <ImageView
+        android:id="@+id/progress_img_unused"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/budget_progress_unused"/>
+</LinearLayout>
