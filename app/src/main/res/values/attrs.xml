@@ -7,4 +7,9 @@
         <attr name="pre_size" format="dimension"/>
         <attr name="post_size" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="StickyScrollView">
+        <attr name="stuckShadowDrawable" format="reference"/>
+        <attr name="stuckShadowHeight" format="dimension"/>
+    </declare-styleable>
 </resources>

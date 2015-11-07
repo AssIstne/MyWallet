@@ -105,7 +105,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_centerVertical="true"
-                        android:textSize="@dimen/font_large"
+                        android:textSize="@dimen/font_big"
                         tools:text="09月开支"
                         />
 

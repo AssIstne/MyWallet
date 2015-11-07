@@ -67,6 +67,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
     private Button activatedButton;
     private boolean monthIsIncome;
     private MyWalletDatabaseUtils db;
+    private boolean isForceFresh = false;
 
     private View root;
     private BarChartView spanChart;
@@ -93,20 +94,21 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
     private ImageButton iBtnMonthIncome;
     private ImageButton iBtnMonthSpend;
 
-    public static StatisticFragment newInstance(long dateInMills, int type) {
-        StatisticFragment fragment = new StatisticFragment();
-        Bundle bundle = new Bundle();
-        bundle.putLong(FLAG_DATE, dateInMills);
-        bundle.putInt(FLAG_TYPE, type);
-        fragment.setArguments(bundle);
-        return fragment;
+    public static StatisticFragment newInstance() {
+        return new StatisticFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.d("", "stat fragment on create");
+        super.onCreate(savedInstanceState);
+        handleArguments();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_statistic, container, false);
-        handleArguments();
         findViews();
         spanChart.setGrid(ChartView.GridType.HORIZONTAL, paint);
         showData();
@@ -138,6 +140,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
                 showWeekData();
                 break;
             case TYPE_DAY:
+                Log.d("", "show day data");
                 showDayData();
                 break;
             default:break;
@@ -154,12 +157,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
         SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.CHINA);
         tvGraphTitle.setText(format.format(currentDate.getTime()));
 
-        if (currentType == TYPE_DAY
+        if (!isForceFresh && currentType == TYPE_DAY
                 && spanChart.getData().size() !=0 && spanChart.getData().get(0).isVisible()
                 && maxScript - currentDate.get(Calendar.DAY_OF_MONTH) > 0 && maxScript - currentDate.get(Calendar.DAY_OF_MONTH) < dataCount) {
             setActivatedBar(dataCount - 1 - (maxScript - currentDate.get(Calendar.DAY_OF_MONTH)));
             spanChart.notifyDataUpdate();
         }else {
+            isForceFresh = false;
             currentType = TYPE_DAY;
             activatedIndex = dataCount - 1;
             maxScript = currentDate.get(Calendar.DAY_OF_MONTH);
@@ -210,12 +214,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
         SimpleDateFormat format = new SimpleDateFormat("MM月第W周", Locale.CHINA);
         tvGraphTitle.setText(format.format(currentDate.getTime()));
 
-        if (currentType == TYPE_WEEK
+        if (!isForceFresh && currentType == TYPE_WEEK
                 && spanChart.getData().size() !=0 && spanChart.getData().get(0).isVisible()
                 && maxScript - currentDate.get(Calendar.WEEK_OF_MONTH) > 0 && maxScript - currentDate.get(Calendar.WEEK_OF_MONTH) < dataCount) {
             setActivatedBar(dataCount - 1 - (maxScript - currentDate.get(Calendar.WEEK_OF_MONTH)));
             spanChart.notifyDataUpdate();
         }else {
+            isForceFresh = false;
             currentType = TYPE_WEEK;
             activatedIndex = dataCount - 1;
             maxScript = dataCount;
@@ -273,12 +278,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月", Locale.CHINA);
         tvGraphTitle.setText(format.format(currentDate.getTime()));
 
-        if (currentType == TYPE_MONTH
+        if (!isForceFresh && currentType == TYPE_MONTH
                 && spanChart.getData().size() !=0 && spanChart.getData().get(0).isVisible()
                 && maxScript - currentDate.get(Calendar.MONTH) > 0 && maxScript - currentDate.get(Calendar.MONTH) < dataCount) {
             setActivatedBar(dataCount - 1 - (maxScript - currentDate.get(Calendar.MONTH)));
             spanChart.notifyDataUpdate();
         }else {
+            isForceFresh = false;
             currentType = TYPE_MONTH;
             activatedIndex = dataCount - 1;
             maxScript = currentDate.get(Calendar.MONTH);
@@ -335,12 +341,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
     }
 
     private void handleArguments() {
-        Bundle bundle = getArguments();
-        currentType = bundle.getInt(FLAG_TYPE, TYPE_MONTH);
-        long currentDateInMills = bundle.getLong(FLAG_DATE, 0);
+        currentType = TYPE_MONTH;
         currentDate = Calendar.getInstance(Locale.CHINA);
-        if (currentDateInMills != 0)
-            currentDate.setTimeInMillis(currentDateInMills);
         if (paint == null)
             paint = new Paint();
         if (db == null)
@@ -669,5 +671,14 @@ public class StatisticFragment extends Fragment implements View.OnClickListener{
         params.width = (int) (Tools.fromDpToPx(200) * percent);
         imgPercent.setLayoutParams(params);
         return root;
+    }
+
+
+    public void setDateAndType(long dateInMills, int type) {
+        currentDate.setTimeInMillis(dateInMills);
+        if (type == TYPE_MONTH || type == TYPE_WEEK || type == TYPE_DAY)
+            currentType = type;
+        isForceFresh = true;
+        showData();
     }
 }

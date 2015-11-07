@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:price="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/snippet_life_bill_span_root"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/snippet_life_bill_span_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="@dimen/margin_edge"
+        android:paddingRight="@dimen/margin_edge"
+        android:background="@drawable/main_title_bg"
+        android:tag="sticky"
+        >
+
+        <TextView
+            android:id="@+id/snippet_life_bill_text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/font_normal"
+            tools:text="11月05日"
+            />
+
+        <TextView
+            android:id="@+id/snippet_life_bill_text_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/snippet_life_bill_text_date"
+            android:layout_toEndOf="@id/snippet_life_bill_text_date"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="@dimen/font_normal"
+            tools:text="星期四"
+            />
+
+        <ImageView
+            android:id="@+id/snippet_life_bill_img_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/main_day_arrow"
+            />
+        <com.assistne.mywallet.customview.PriceView
+            android:id="@+id/snippet_life_bill_text_spend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/snippet_life_bill_img_arrow"
+            android:layout_toStartOf="@id/snippet_life_bill_img_arrow"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"
+            price:pre_size="@dimen/font_normal"
+            price:post_size="@dimen/font_small"
+            />
+
+        <TextView
+            android:id="@+id/snippet_life_bill_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/snippet_life_bill_text_spend"
+            android:layout_toStartOf="@id/snippet_life_bill_text_spend"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/global_spend"
+            />
+    </RelativeLayout>
+</LinearLayout>

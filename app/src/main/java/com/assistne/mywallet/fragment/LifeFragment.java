@@ -12,19 +12,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.assistne.mywallet.R;
 import com.assistne.mywallet.activity.BillActivity;
+import com.assistne.mywallet.activity.RecordActivity;
 import com.assistne.mywallet.customview.BudgetProgressBar;
+import com.assistne.mywallet.customview.LifeBillDetailView;
 import com.assistne.mywallet.customview.PriceView;
 import com.assistne.mywallet.db.MyWalletDatabaseUtils;
+import com.assistne.mywallet.model.Bill;
 import com.assistne.mywallet.util.BillUtils;
 import com.assistne.mywallet.util.BitmapCut;
 import com.assistne.mywallet.util.GlobalUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -41,6 +47,10 @@ public class LifeFragment extends Fragment implements OnClickListener {
     private TextView tvMonth;
     private TextView tvDay;
     private RelativeLayout spanDate;
+    private LinearLayout spanMain;
+    private ScrollView spanScroll;
+
+    private int curentScrollY;
 
     @Nullable
     @Override
@@ -71,6 +81,8 @@ public class LifeFragment extends Fragment implements OnClickListener {
         tvDay = (TextView)root.findViewById(R.id.life_text_date_day);
 
         spanDate = (RelativeLayout)root.findViewById(R.id.life_span_date);
+        spanMain = (LinearLayout)root.findViewById(R.id.life_span_main);
+        spanScroll = (ScrollView)root.findViewById(R.id.life_span_scroll);
     }
 
     public void refresh() {
@@ -100,12 +112,54 @@ public class LifeFragment extends Fragment implements OnClickListener {
                 spanDate.setTranslationX((root.getMeasuredWidth() - spanDate.getMeasuredWidth()) * dayOfMonth);
             }
         }, 10);
+
+        spanMain.removeAllViews();
+        calendar.setTimeInMillis(to);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        from = calendar.getTimeInMillis();
+        while (month - calendar.get(Calendar.MONTH) <= 2) {
+            to = from;
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            from = calendar.getTimeInMillis();
+            ArrayList<Bill> data = MyWalletDatabaseUtils.getInstance(getActivity()).getBillsByTime(from, to);
+            if (data.size() > 0) {
+                LifeBillDetailView view = new LifeBillDetailView(getActivity(), data);
+                view.setTag(to);
+                view.setTitleOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((RecordActivity) getActivity()).showStatisticFragment(
+                                (long) ((LifeBillDetailView) v.getParent().getParent()).getTag(),
+                                        StatisticFragment.TYPE_DAY);
+                    }
+                });
+                spanMain.addView(view);
+
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        curentScrollY = spanScroll.getScrollY();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+            refresh();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         refresh();
+        if (curentScrollY != 0)
+            spanScroll.setScrollY(curentScrollY);
     }
 
     @Override
